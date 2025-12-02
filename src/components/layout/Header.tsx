@@ -21,9 +21,31 @@ const navItems = [
   { label: 'Réalisations', labelEn: 'Portfolio', href: 'portfolio', isPage: false, icon: FolderOpen },
 ]
 
+// Composant drapeau français
+const FrenchFlag = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+    <g fillRule="evenodd" strokeWidth="1pt">
+      <path fill="#fff" d="M0 0h640v480H0z"/>
+      <path fill="#002654" d="M0 0h213.3v480H0z"/>
+      <path fill="#ce1126" d="M426.7 0H640v480H426.7z"/>
+    </g>
+  </svg>
+)
+
+// Composant drapeau britannique
+const BritishFlag = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#012169" d="M0 0h640v480H0z"/>
+    <path fill="#FFF" d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0h75z"/>
+    <path fill="#C8102E" d="m424 281 216 159v40L369 281h55zm-184 20 6 35L54 480H0l240-179zM640 0v3L391 191l2-44L590 0h50zM0 0l239 176h-60L0 42V0z"/>
+    <path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+    <path fill="#C8102E" d="M0 193v96h640v-96H0zM273 0v480h96V0h-96z"/>
+  </svg>
+)
+
 const languages = [
-  { code: 'fr', label: 'FR', fullLabel: 'Français', flag: '🇫🇷' },
-  { code: 'en', label: 'EN', fullLabel: 'English', flag: '🇬🇧' },
+  { code: 'fr', label: 'FR', fullLabel: 'Français', Flag: FrenchFlag },
+  { code: 'en', label: 'EN', fullLabel: 'English', Flag: BritishFlag },
 ]
 
 export default function Header() {
@@ -80,6 +102,7 @@ export default function Header() {
   }
 
   const currentLanguage = languages.find(l => l.code === currentLang)
+  const CurrentFlag = currentLanguage?.Flag
 
   // On non-home pages, header should always have white background
   const showWhiteBg = isScrolled || !isHomePage
@@ -98,7 +121,7 @@ export default function Header() {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center group"
+            className="flex items-center group flex-shrink-0"
           >
             <Image
               src="/Copie de Fichier 6 (1).png"
@@ -113,30 +136,32 @@ export default function Header() {
             />
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1">
-            {navItems.map((item) => {
-              const Icon = item.icon
-              return (
-                <button
-                  key={item.href}
-                  onClick={() => handleNavClick(item)}
-                  className={cn(
-                    'px-4 py-2 rounded-lg font-medium transition-all duration-300 relative flex items-center gap-2',
-                    showWhiteBg
-                      ? 'text-gray-700 hover:text-primary hover:bg-gray-100'
-                      : 'text-white/90 hover:text-white hover:bg-white/10'
-                  )}
-                >
-                  <Icon className="w-4 h-4" />
-                  {getLabel(item)}
-                </button>
-              )
-            })}
+          {/* Desktop Navigation - Centré avec espace */}
+          <div className="hidden lg:flex items-center justify-end flex-1 ml-16">
+            <div className="flex items-center gap-2">
+              {navItems.map((item) => {
+                const Icon = item.icon
+                return (
+                  <button
+                    key={item.href}
+                    onClick={() => handleNavClick(item)}
+                    className={cn(
+                      'px-4 py-2 rounded-lg font-medium transition-all duration-300 relative flex items-center gap-2',
+                      showWhiteBg
+                        ? 'text-gray-700 hover:text-primary hover:bg-gray-100'
+                        : 'text-white/90 hover:text-white hover:bg-white/10'
+                    )}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {getLabel(item)}
+                  </button>
+                )
+              })}
+            </div>
           </div>
 
           {/* Right side: Language + CTA */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-4 ml-8">
             {/* Language Selector Desktop */}
             <div className="relative">
               <button
@@ -151,7 +176,11 @@ export default function Header() {
                     : 'text-white/90 hover:text-white hover:bg-white/10'
                 )}
               >
-                <span className="text-lg">{currentLanguage?.flag}</span>
+                {CurrentFlag && (
+                  <span className="w-6 h-4 rounded overflow-hidden shadow-sm border border-gray-200/50">
+                    <CurrentFlag className="w-full h-full object-cover" />
+                  </span>
+                )}
                 <span>{currentLanguage?.label}</span>
                 <ChevronDown className={cn(
                   "w-4 h-4 transition-transform duration-200",
@@ -168,24 +197,29 @@ export default function Header() {
                     : 'opacity-0 -translate-y-2 pointer-events-none'
                 )}
               >
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      handleLangChange(lang.code)
-                    }}
-                    className={cn(
-                      'w-full flex items-center gap-3 px-4 py-3 text-left transition-colors',
-                      currentLang === lang.code
-                        ? 'bg-primary-50 text-primary font-medium'
-                        : 'text-gray-700 hover:bg-gray-50'
-                    )}
-                  >
-                    <span className="text-xl">{lang.flag}</span>
-                    <span>{lang.fullLabel}</span>
-                  </button>
-                ))}
+                {languages.map((lang) => {
+                  const LangFlag = lang.Flag
+                  return (
+                    <button
+                      key={lang.code}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleLangChange(lang.code)
+                      }}
+                      className={cn(
+                        'w-full flex items-center gap-3 px-4 py-3 text-left transition-colors',
+                        currentLang === lang.code
+                          ? 'bg-primary-50 text-primary font-medium'
+                          : 'text-gray-700 hover:bg-gray-50'
+                      )}
+                    >
+                      <span className="w-7 h-5 rounded overflow-hidden shadow-sm border border-gray-200">
+                        <LangFlag className="w-full h-full object-cover" />
+                      </span>
+                      <span>{lang.fullLabel}</span>
+                    </button>
+                  )
+                })}
               </div>
             </div>
 
@@ -195,7 +229,7 @@ export default function Header() {
                 variant="primary"
                 size="md"
               >
-                {currentLang === 'en' ? 'Get a quote' : 'Demander un devis'}
+                {currentLang === 'en' ? 'Contact us' : 'Nous contacter'}
               </Button>
             </Link>
           </div>
@@ -216,7 +250,11 @@ export default function Header() {
                     : 'text-white hover:bg-white/10'
                 )}
               >
-                <span className="text-lg">{currentLanguage?.flag}</span>
+                {CurrentFlag && (
+                  <span className="w-5 h-3.5 rounded-sm overflow-hidden shadow-sm border border-gray-200/50">
+                    <CurrentFlag className="w-full h-full object-cover" />
+                  </span>
+                )}
                 <span>{currentLanguage?.label}</span>
                 <ChevronDown className={cn(
                   "w-3.5 h-3.5 transition-transform duration-200",
@@ -233,24 +271,29 @@ export default function Header() {
                     : 'opacity-0 -translate-y-2 pointer-events-none'
                 )}
               >
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      handleLangChange(lang.code)
-                    }}
-                    className={cn(
-                      'w-full flex items-center gap-3 px-4 py-3 text-left transition-colors',
-                      currentLang === lang.code
-                        ? 'bg-primary-50 text-primary font-medium'
-                        : 'text-gray-700 hover:bg-gray-50'
-                    )}
-                  >
-                    <span className="text-xl">{lang.flag}</span>
-                    <span>{lang.fullLabel}</span>
-                  </button>
-                ))}
+                {languages.map((lang) => {
+                  const LangFlag = lang.Flag
+                  return (
+                    <button
+                      key={lang.code}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleLangChange(lang.code)
+                      }}
+                      className={cn(
+                        'w-full flex items-center gap-3 px-4 py-3 text-left transition-colors',
+                        currentLang === lang.code
+                          ? 'bg-primary-50 text-primary font-medium'
+                          : 'text-gray-700 hover:bg-gray-50'
+                      )}
+                    >
+                      <span className="w-6 h-4 rounded-sm overflow-hidden shadow-sm border border-gray-200">
+                        <LangFlag className="w-full h-full object-cover" />
+                      </span>
+                      <span>{lang.fullLabel}</span>
+                    </button>
+                  )
+                })}
               </div>
             </div>
 
@@ -307,7 +350,7 @@ export default function Header() {
                   size="lg"
                   className="w-full"
                 >
-                  {currentLang === 'en' ? 'Get a quote' : 'Demander un devis'}
+                  {currentLang === 'en' ? 'Contact us' : 'Nous contacter'}
                 </Button>
               </Link>
             </div>

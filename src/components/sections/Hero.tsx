@@ -1,14 +1,14 @@
 'use client'
 
-import { Check, ArrowRight, MessageCircle } from 'lucide-react'
+import { Check, ArrowRight, MessageCircle, Sparkles, Rocket, Zap } from 'lucide-react'
 import Button from '@/components/ui/Button'
-import { scrollToSection, whatsappLink } from '@/lib/utils'
+import { whatsappLink } from '@/lib/utils'
+import Link from 'next/link'
 
-const highlights = [
-  'Création de sites internet professionnels à partir de 30 000 XAF',
-  'Intégration d\'ERP et de SaaS sur mesure',
-  'Automatisation par IA pour réduire vos coûts et gagner du temps',
-  'Hébergement, nom de domaine, mails pro, photos, logo, SEO : tout est inclus',
+const stats = [
+  { value: '50+', label: 'Clients' },
+  { value: '5j', label: 'Délai' },
+  { value: '50%', label: 'Économies' },
 ]
 
 export default function Hero() {
@@ -37,49 +37,70 @@ export default function Hero() {
       {/* Content */}
       <div className="relative container-custom pt-32 pb-20 md:pt-40 md:pb-28">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left: Text content */}
+          {/* Left: Text content - NEW DESIGN */}
           <div className="text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 text-sm font-medium mb-6 animate-fade-in">
-              <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-              Votre partenaire technologique de confiance
+            {/* Top badge with price */}
+            <div className="inline-flex items-center gap-3 mb-8 animate-fade-in">
+              <div className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+                <Sparkles className="w-4 h-4 text-secondary" />
+                <span className="text-white/90 text-sm font-medium">Sites web pro</span>
+              </div>
+              <div className="px-4 py-2 bg-secondary rounded-full">
+                <span className="text-gray-900 text-sm font-bold">À partir de 30 000 XAF</span>
+              </div>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-in-up">
-              Meriaz, votre partenaire technologique pour{' '}
-              <span className="text-gradient-orange">faire décoller</span>{' '}
-              votre business
+            {/* Main heading with highlight */}
+            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-white mb-6 leading-[1.15] animate-fade-in-up">
+              <span className="block mb-2">Transformez vos idées</span>
+              <span className="block">
+                en{' '}
+                <span className="relative inline-block">
+                  <span className="relative z-10 text-gradient-orange">solutions digitales</span>
+                  <span className="absolute bottom-1 left-0 right-0 h-3 bg-secondary/30 -rotate-1 rounded"></span>
+                </span>
+              </span>
             </h1>
 
-            <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl lg:max-w-none animate-fade-in-up animation-delay-200">
-              Nous vous aidons à intégrer les briques IA et les logiciels dont vous avez besoin pour être plus efficace, plus rentable et réduire vos coûts… tout en gardant l'esprit tranquille.
-            </p>
+            {/* Subtitle with icons */}
+            <div className="space-y-4 mb-8 animate-fade-in-up animation-delay-200">
+              <p className="text-xl text-white/80 leading-relaxed">
+                Meriaz est votre partenaire technologique pour créer des 
+                <span className="text-white font-semibold"> sites internet</span>, 
+                <span className="text-white font-semibold"> ERP</span>, 
+                <span className="text-white font-semibold"> SaaS</span> et 
+                <span className="text-white font-semibold"> automatisations IA</span>.
+              </p>
+            </div>
 
-            {/* Highlights */}
-            <div className="space-y-3 mb-10 animate-fade-in-up animation-delay-300">
-              {highlights.map((highlight, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-3 text-left"
-                >
-                  <div className="flex-shrink-0 w-6 h-6 bg-accent/20 rounded-full flex items-center justify-center mt-0.5">
-                    <Check className="w-4 h-4 text-accent" />
-                  </div>
-                  <span className="text-white/90">{highlight}</span>
-                </div>
-              ))}
+            {/* Feature tags */}
+            <div className="flex flex-wrap gap-3 mb-8 justify-center lg:justify-start animate-fade-in-up animation-delay-300">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-accent/20 rounded-lg border border-accent/30">
+                <Zap className="w-4 h-4 text-accent" />
+                <span className="text-white text-sm">Livraison rapide</span>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/20 rounded-lg border border-primary/30">
+                <Rocket className="w-4 h-4 text-primary-light" />
+                <span className="text-white text-sm">Tout inclus</span>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-secondary/20 rounded-lg border border-secondary/30">
+                <Check className="w-4 h-4 text-secondary" />
+                <span className="text-white text-sm">Support 24/7</span>
+              </div>
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up animation-delay-400">
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={() => scrollToSection('contact')}
-                className="group"
-              >
-                Créer mon site dès maintenant
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10 animate-fade-in-up animation-delay-400">
+              <Link href="/contact">
+                <Button
+                  variant="primary"
+                  size="lg"
+                  className="group w-full sm:w-auto"
+                >
+                  Démarrer mon projet
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
               <Button
                 variant="outline"
                 size="lg"
@@ -87,29 +108,36 @@ export default function Hero() {
                 className="group"
               >
                 <MessageCircle className="w-5 h-5" />
-                Parler avec nous sur WhatsApp
+                WhatsApp
               </Button>
             </div>
 
-            {/* Trust indicators */}
-            <div className="flex items-center gap-6 justify-center lg:justify-start mt-10 animate-fade-in-up animation-delay-500">
-              <div className="flex -space-x-2">
-                {[1, 2, 3, 4].map((i) => (
-                  <div
-                    key={i}
-                    className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 border-2 border-white flex items-center justify-center text-xs font-bold text-gray-600"
-                  >
-                    {['A', 'M', 'T', 'K'][i - 1]}
-                  </div>
-                ))}
-              </div>
-              <div className="text-white/80 text-sm">
-                <span className="text-white font-semibold">+50</span> entreprises accompagnées
+            {/* Stats row */}
+            <div className="flex items-center gap-8 justify-center lg:justify-start animate-fade-in-up animation-delay-500">
+              {stats.map((stat, index) => (
+                <div key={index} className="text-center lg:text-left">
+                  <div className="text-2xl md:text-3xl font-bold text-white">{stat.value}</div>
+                  <div className="text-white/60 text-sm">{stat.label}</div>
+                </div>
+              ))}
+              <div className="hidden sm:block h-12 w-px bg-white/20" />
+              <div className="hidden sm:flex items-center gap-2">
+                <div className="flex -space-x-2">
+                  {['A', 'M', 'K'].map((letter, i) => (
+                    <div
+                      key={i}
+                      className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary-light border-2 border-white/20 flex items-center justify-center text-xs font-bold text-white"
+                    >
+                      {letter}
+                    </div>
+                  ))}
+                </div>
+                <span className="text-white/70 text-sm">+50 clients</span>
               </div>
             </div>
           </div>
 
-          {/* Right: Visual element */}
+          {/* Right: Visual element - UNCHANGED */}
           <div className="hidden lg:block relative">
             <div className="relative animate-fade-in animation-delay-300">
               {/* Main visual card */}
@@ -177,14 +205,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center pt-2">
-          <div className="w-1.5 h-3 bg-white/80 rounded-full animate-pulse" />
-        </div>
-      </div>
     </section>
   )
 }
-
