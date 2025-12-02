@@ -2,20 +2,45 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { Facebook, Instagram, Linkedin, Twitter, MessageCircle, Mail, MapPin } from 'lucide-react'
+import { 
+  Facebook, 
+  Instagram, 
+  Linkedin, 
+  Twitter, 
+  MessageCircle, 
+  Mail, 
+  MapPin, 
+  Phone,
+  Shield,
+  Globe,
+  Code,
+  Cpu,
+  Smartphone,
+  Database,
+  Bot,
+  Palette
+} from 'lucide-react'
 import { whatsappLink, whatsappNumber } from '@/lib/utils'
 
-const quickLinks = [
-  { label: 'Accueil', href: '/' },
-  { label: 'Références', href: '/references' },
-  { label: 'À propos', href: '/a-propos' },
-  { label: 'Contact', href: '/contact' },
+const services = [
+  { label: 'Sites Internet', href: '/#services' },
+  { label: 'Applications Web', href: '/#services' },
+  { label: 'ERP & Solutions Métiers', href: '/#services' },
+  { label: 'Automatisation IA', href: '/#services' },
 ]
 
 const products = [
   { label: 'Otolid', href: 'https://www.otolid.io', external: true },
   { label: 'Kazimo', href: 'https://www.kazimo.app', external: true },
   { label: 'Wemonii', href: 'https://www.wemonii.com', external: true },
+  { label: 'Core Banking', href: '/#products' },
+]
+
+const information = [
+  { label: 'Contactez-nous', href: '/contact' },
+  { label: 'À propos', href: '/a-propos' },
+  { label: 'Références', href: '/references' },
+  { label: 'Réalisations', href: '/#portfolio' },
 ]
 
 const socialLinks = [
@@ -29,10 +54,16 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer className="bg-gray-900 text-gray-300 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/5 rounded-full blur-3xl" />
+      </div>
+
       {/* Main footer */}
-      <div className="container-custom pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
+      <div className="container-custom pt-16 pb-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-12 mb-10">
           {/* Brand column */}
           <div className="lg:col-span-2">
             {/* Logo */}
@@ -49,7 +80,7 @@ export default function Footer() {
             <p className="text-lg font-medium text-white mb-2">
               Votre partenaire technologique
             </p>
-            <p className="text-gray-400 mb-6 max-w-sm">
+            <p className="text-gray-400 mb-6 max-w-sm leading-relaxed">
               Nous aidons les entrepreneurs africains à créer des sites internet, ERP, SaaS et automatisations IA pour faire décoller leur business.
             </p>
 
@@ -64,103 +95,172 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="w-10 h-10 bg-gray-800 hover:bg-primary rounded-lg flex items-center justify-center transition-colors duration-300"
+                    className="w-10 h-10 bg-white/5 border border-white/10 hover:bg-primary/20 hover:border-primary/30 rounded-lg flex items-center justify-center transition-all duration-300"
                   >
-                    <Icon className="w-5 h-5" />
+                    <Icon className="w-5 h-5 text-primary" />
                   </a>
                 )
               })}
             </div>
           </div>
 
-          {/* Quick links */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Liens rapides</h4>
-            <ul className="space-y-3">
-              {quickLinks.map((link, index) => (
-                <li key={index}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-white transition-colors duration-200"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Links Grid */}
+          <div className="lg:col-span-3 grid grid-cols-2 sm:grid-cols-3 gap-8">
+            {/* Information */}
+            <div>
+              <h4 className="text-xs font-bold mb-4 text-white uppercase tracking-widest flex items-center gap-2">
+                <span className="w-6 h-0.5 bg-gradient-to-r from-primary to-primary/50 rounded-full"></span>
+                Information
+              </h4>
+              <ul className="space-y-2">
+                {information.map((link, index) => (
+                  <li key={index}>
+                    <Link
+                      href={link.href}
+                      className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 text-sm"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary group-hover:w-2 transition-all duration-300"></span>
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Products */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Nos produits</h4>
-            <ul className="space-y-3">
-              {products.map((product, index) => (
-                <li key={index}>
-                  <a
-                    href={product.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-white transition-colors duration-200"
-                  >
-                    {product.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+            {/* Services */}
+            <div>
+              <h4 className="text-xs font-bold mb-4 text-white uppercase tracking-widest flex items-center gap-2">
+                <span className="w-6 h-0.5 bg-gradient-to-r from-secondary to-secondary/50 rounded-full"></span>
+                Nos Services
+              </h4>
+              <ul className="space-y-2">
+                {services.map((service, index) => (
+                  <li key={index}>
+                    <Link
+                      href={service.href}
+                      className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 text-sm"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-secondary/40 group-hover:bg-secondary group-hover:w-2 transition-all duration-300"></span>
+                      {service.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Contact</h4>
-            <ul className="space-y-4">
-              <li>
-                <a
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors duration-200"
-                >
-                  <MessageCircle className="w-5 h-5 text-accent" />
-                  <span>{whatsappNumber}</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:contact@meriaz.com"
-                  className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors duration-200"
-                >
-                  <Mail className="w-5 h-5 text-secondary" />
-                  <span>contact@meriaz.com</span>
-                </a>
-              </li>
-              <li className="flex items-center gap-3 text-gray-400">
-                <MapPin className="w-5 h-5 text-primary-light" />
-                <span>Yaoundé, Cameroun</span>
-              </li>
-            </ul>
+            {/* Products */}
+            <div>
+              <h4 className="text-xs font-bold mb-4 text-white uppercase tracking-widest flex items-center gap-2">
+                <span className="w-6 h-0.5 bg-gradient-to-r from-accent to-accent/50 rounded-full"></span>
+                Nos Produits
+              </h4>
+              <ul className="space-y-2">
+                {products.map((product, index) => (
+                  <li key={index}>
+                    {product.external ? (
+                      <a
+                        href={product.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 text-sm"
+                      >
+                        <span className="w-1 h-1 rounded-full bg-accent/40 group-hover:bg-accent group-hover:w-2 transition-all duration-300"></span>
+                        {product.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={product.href}
+                        className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 text-sm"
+                      >
+                        <span className="w-1 h-1 rounded-full bg-accent/40 group-hover:bg-accent group-hover:w-2 transition-all duration-300"></span>
+                        {product.label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Contact Row */}
+        <div className="border-t border-white/10 pt-8 mb-8">
+          <h4 className="text-xs font-bold mb-4 text-white uppercase tracking-widest flex items-center gap-2">
+            <span className="w-6 h-0.5 bg-gradient-to-r from-primary to-primary/50 rounded-full"></span>
+            Contact
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {/* WhatsApp */}
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-green-500/20 group-hover:border-green-500/30 transition-colors duration-300">
+                <MessageCircle className="w-4 h-4 text-green-500" />
+              </div>
+              <div>
+                <span className="text-gray-400 group-hover:text-white transition-colors text-sm block">{whatsappNumber}</span>
+                <span className="text-xs text-gray-600">WhatsApp</span>
+              </div>
+            </a>
+
+            {/* Email */}
+            <a
+              href="mailto:contact@meriaz.com"
+              className="flex items-center gap-3 group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 group-hover:border-primary/30 transition-colors duration-300">
+                <Mail className="w-4 h-4 text-primary" />
+              </div>
+              <div>
+                <span className="text-gray-400 group-hover:text-white transition-colors text-sm block">contact@meriaz.com</span>
+                <span className="text-xs text-gray-600">Email</span>
+              </div>
+            </a>
+
+            {/* Location */}
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
+                <MapPin className="w-4 h-4 text-secondary" />
+              </div>
+              <div>
+                <span className="text-gray-400 text-sm block">Yaoundé, Cameroun</span>
+                <span className="text-xs text-gray-600">Localisation</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-gray-800">
+      <div className="border-t border-white/10">
         <div className="container-custom py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-gray-500">
-              © {currentYear} Meriaz - Tous droits réservés.
-            </p>
-            <div className="flex gap-6 text-sm">
-              <button className="text-gray-500 hover:text-white transition-colors">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center">
+                <Shield className="w-4 h-4 text-primary" />
+              </div>
+              <p className="text-gray-400 text-xs sm:text-sm">
+                © {currentYear} Meriaz - Tous droits réservés.
+              </p>
+            </div>
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
+              <button className="text-gray-500 hover:text-white transition-colors duration-300">
                 Mentions légales
               </button>
-              <button className="text-gray-500 hover:text-white transition-colors">
-                CGU
+              <button className="text-gray-500 hover:text-white transition-colors duration-300">
+                Confidentialité
               </button>
-              <button className="text-gray-500 hover:text-white transition-colors">
-                Politique de confidentialité
+              <button className="text-gray-500 hover:text-white transition-colors duration-300">
+                CGU
               </button>
             </div>
           </div>
+          <p className="text-gray-600 text-[10px] sm:text-xs text-center mt-4 max-w-xl mx-auto">
+            Meriaz est votre partenaire technologique pour la transformation digitale des entrepreneurs africains.
+          </p>
         </div>
       </div>
     </footer>

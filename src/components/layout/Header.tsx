@@ -7,13 +7,9 @@ import { usePathname } from 'next/navigation'
 import { 
   Menu, 
   X, 
-  Home, 
   Briefcase, 
   Package, 
   FolderOpen, 
-  Users, 
-  Info, 
-  Mail,
   Globe,
   ChevronDown
 } from 'lucide-react'
@@ -21,13 +17,9 @@ import { cn, scrollToSection } from '@/lib/utils'
 import Button from '@/components/ui/Button'
 
 const navItems = [
-  { label: 'Accueil', labelEn: 'Home', href: '/', isPage: true, icon: Home },
   { label: 'Services', labelEn: 'Services', href: 'services', isPage: false, icon: Briefcase },
   { label: 'Produits', labelEn: 'Products', href: 'products', isPage: false, icon: Package },
   { label: 'Réalisations', labelEn: 'Portfolio', href: 'portfolio', isPage: false, icon: FolderOpen },
-  { label: 'Références', labelEn: 'References', href: '/references', isPage: true, icon: Users },
-  { label: 'À propos', labelEn: 'About', href: '/a-propos', isPage: true, icon: Info },
-  { label: 'Contact', labelEn: 'Contact', href: '/contact', isPage: true, icon: Mail },
 ]
 
 const languages = [
@@ -65,29 +57,17 @@ export default function Header() {
   }, [isLangMenuOpen])
 
   const handleNavClick = (item: typeof navItems[0]) => {
-    if (item.isPage) {
-      setIsMobileMenuOpen(false)
+    if (isHomePage) {
+      scrollToSection(item.href)
     } else {
-      if (isHomePage) {
-        scrollToSection(item.href)
-      } else {
-        window.location.href = `/#${item.href}`
-      }
-      setIsMobileMenuOpen(false)
+      window.location.href = `/#${item.href}`
     }
-  }
-
-  const isActive = (item: typeof navItems[0]) => {
-    if (item.isPage) {
-      return pathname === item.href
-    }
-    return false
+    setIsMobileMenuOpen(false)
   }
 
   const handleLangChange = (langCode: string) => {
     setCurrentLang(langCode)
     setIsLangMenuOpen(false)
-    // TODO: Implement actual language change logic
   }
 
   const getLabel = (item: typeof navItems[0]) => {
@@ -132,30 +112,12 @@ export default function Header() {
           <div className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => {
               const Icon = item.icon
-              return item.isPage ? (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    'px-3 py-2 rounded-lg font-medium transition-all duration-300 relative flex items-center gap-2',
-                    showWhiteBg
-                      ? isActive(item)
-                        ? 'text-primary bg-primary-50'
-                        : 'text-gray-700 hover:text-primary hover:bg-gray-100'
-                      : isActive(item)
-                        ? 'text-white bg-white/20'
-                        : 'text-white/90 hover:text-white hover:bg-white/10'
-                  )}
-                >
-                  <Icon className="w-4 h-4" />
-                  {getLabel(item)}
-                </Link>
-              ) : (
+              return (
                 <button
                   key={item.href}
                   onClick={() => handleNavClick(item)}
                   className={cn(
-                    'px-3 py-2 rounded-lg font-medium transition-all duration-300 relative flex items-center gap-2',
+                    'px-4 py-2 rounded-lg font-medium transition-all duration-300 relative flex items-center gap-2',
                     showWhiteBg
                       ? 'text-gray-700 hover:text-primary hover:bg-gray-100'
                       : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -283,22 +245,7 @@ export default function Header() {
           <div className="flex flex-col gap-2">
             {navItems.map((item) => {
               const Icon = item.icon
-              return item.isPage ? (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={cn(
-                    'px-4 py-3 rounded-xl font-medium text-left transition-all duration-200 flex items-center gap-3',
-                    isActive(item)
-                      ? 'text-primary bg-primary-50'
-                      : 'text-gray-700 hover:text-primary hover:bg-gray-50'
-                  )}
-                >
-                  <Icon className="w-5 h-5" />
-                  {getLabel(item)}
-                </Link>
-              ) : (
+              return (
                 <button
                   key={item.href}
                   onClick={() => handleNavClick(item)}
