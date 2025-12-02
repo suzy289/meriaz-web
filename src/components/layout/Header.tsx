@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
 import { cn, scrollToSection } from '@/lib/utils'
 import Button from '@/components/ui/Button'
@@ -61,25 +62,19 @@ export default function Header() {
           {/* Logo */}
           <button
             onClick={() => handleNavClick('hero')}
-            className="flex items-center gap-2 group"
+            className="flex items-center group"
           >
-            <div className="relative">
-              <div className={cn(
-                "w-10 h-10 rounded-xl flex items-center justify-center font-bold text-xl transition-all duration-300",
-                isScrolled
-                  ? "bg-primary text-white"
-                  : "bg-white text-primary"
-              )}>
-                M
-              </div>
-              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-secondary rounded-full" />
-            </div>
-            <span className={cn(
-              "text-xl font-bold transition-colors duration-300",
-              isScrolled ? "text-gray-900" : "text-white"
-            )}>
-              Meriaz
-            </span>
+            <Image
+              src="/Copie de Fichier 6 (1).png"
+              alt="Meriaz"
+              width={140}
+              height={45}
+              className={cn(
+                "h-10 w-auto transition-all duration-300",
+                isScrolled ? "brightness-0" : "brightness-100"
+              )}
+              priority
+            />
           </button>
 
           {/* Desktop Navigation */}

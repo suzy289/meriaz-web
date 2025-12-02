@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Facebook, Instagram, Linkedin, Twitter, MessageCircle, Mail, MapPin } from 'lucide-react'
 import { scrollToSection, whatsappLink, whatsappNumber } from '@/lib/utils'
 
@@ -36,14 +37,14 @@ export default function Footer() {
           {/* Brand column */}
           <div className="lg:col-span-2">
             {/* Logo */}
-            <div className="flex items-center gap-2 mb-4">
-              <div className="relative">
-                <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center font-bold text-xl text-white">
-                  M
-                </div>
-                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-secondary rounded-full" />
-              </div>
-              <span className="text-xl font-bold text-white">Meriaz</span>
+            <div className="mb-4">
+              <Image
+                src="/Copie de Fichier 6 (1).png"
+                alt="Meriaz"
+                width={160}
+                height={50}
+                className="h-12 w-auto"
+              />
             </div>
             
             <p className="text-lg font-medium text-white mb-2">
