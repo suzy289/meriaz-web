@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -10,7 +10,6 @@ import {
   Briefcase, 
   Package, 
   FolderOpen, 
-  Globe,
   ChevronDown
 } from 'lucide-react'
 import { cn, scrollToSection } from '@/lib/utils'
@@ -31,9 +30,11 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false)
+  const [isMobileLangMenuOpen, setIsMobileLangMenuOpen] = useState(false)
   const [currentLang, setCurrentLang] = useState('fr')
   const pathname = usePathname()
   const isHomePage = pathname === '/'
+  const mobileLangRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,17 +45,20 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Close language menu when clicking outside
+  // Close language menus when clicking outside
   useEffect(() => {
-    const handleClickOutside = () => {
+    const handleClickOutside = (e: MouseEvent) => {
       setIsLangMenuOpen(false)
+      if (mobileLangRef.current && !mobileLangRef.current.contains(e.target as Node)) {
+        setIsMobileLangMenuOpen(false)
+      }
     }
     
-    if (isLangMenuOpen) {
+    if (isLangMenuOpen || isMobileLangMenuOpen) {
       document.addEventListener('click', handleClickOutside)
       return () => document.removeEventListener('click', handleClickOutside)
     }
-  }, [isLangMenuOpen])
+  }, [isLangMenuOpen, isMobileLangMenuOpen])
 
   const handleNavClick = (item: typeof navItems[0]) => {
     if (isHomePage) {
@@ -68,6 +72,7 @@ export default function Header() {
   const handleLangChange = (langCode: string) => {
     setCurrentLang(langCode)
     setIsLangMenuOpen(false)
+    setIsMobileLangMenuOpen(false)
   }
 
   const getLabel = (item: typeof navItems[0]) => {
@@ -132,7 +137,7 @@ export default function Header() {
 
           {/* Right side: Language + CTA */}
           <div className="hidden lg:flex items-center gap-3">
-            {/* Language Selector */}
+            {/* Language Selector Desktop */}
             <div className="relative">
               <button
                 onClick={(e) => {
@@ -146,18 +151,18 @@ export default function Header() {
                     : 'text-white/90 hover:text-white hover:bg-white/10'
                 )}
               >
-                <Globe className="w-4 h-4" />
-                <span>{currentLanguage?.flag} {currentLanguage?.label}</span>
+                <span className="text-lg">{currentLanguage?.flag}</span>
+                <span>{currentLanguage?.label}</span>
                 <ChevronDown className={cn(
                   "w-4 h-4 transition-transform duration-200",
                   isLangMenuOpen && "rotate-180"
                 )} />
               </button>
 
-              {/* Language Dropdown */}
+              {/* Language Dropdown Desktop */}
               <div
                 className={cn(
-                  'absolute top-full right-0 mt-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-200 min-w-[150px]',
+                  'absolute top-full right-0 mt-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-200 min-w-[160px]',
                   isLangMenuOpen
                     ? 'opacity-100 translate-y-0 pointer-events-auto'
                     : 'opacity-0 -translate-y-2 pointer-events-none'
@@ -177,7 +182,7 @@ export default function Header() {
                         : 'text-gray-700 hover:bg-gray-50'
                     )}
                   >
-                    <span className="text-lg">{lang.flag}</span>
+                    <span className="text-xl">{lang.flag}</span>
                     <span>{lang.fullLabel}</span>
                   </button>
                 ))}
@@ -195,21 +200,59 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Mobile: Language + Menu Button */}
+          {/* Mobile: Language Dropdown + Menu Button */}
           <div className="flex lg:hidden items-center gap-2">
-            {/* Mobile Language Toggle */}
-            <button
-              onClick={() => setCurrentLang(currentLang === 'fr' ? 'en' : 'fr')}
-              className={cn(
-                'flex items-center gap-1 px-2 py-2 rounded-lg font-medium transition-colors text-sm',
-                showWhiteBg
-                  ? 'text-gray-700 hover:bg-gray-100'
-                  : 'text-white hover:bg-white/10'
-              )}
-            >
-              <span>{currentLanguage?.flag}</span>
-              <span>{currentLanguage?.label}</span>
-            </button>
+            {/* Mobile Language Dropdown */}
+            <div className="relative" ref={mobileLangRef}>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIsMobileLangMenuOpen(!isMobileLangMenuOpen)
+                }}
+                className={cn(
+                  'flex items-center gap-1.5 px-2.5 py-2 rounded-lg font-medium transition-colors text-sm',
+                  showWhiteBg
+                    ? 'text-gray-700 hover:bg-gray-100'
+                    : 'text-white hover:bg-white/10'
+                )}
+              >
+                <span className="text-lg">{currentLanguage?.flag}</span>
+                <span>{currentLanguage?.label}</span>
+                <ChevronDown className={cn(
+                  "w-3.5 h-3.5 transition-transform duration-200",
+                  isMobileLangMenuOpen && "rotate-180"
+                )} />
+              </button>
+
+              {/* Mobile Language Dropdown Menu */}
+              <div
+                className={cn(
+                  'absolute top-full right-0 mt-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-200 min-w-[150px] z-50',
+                  isMobileLangMenuOpen
+                    ? 'opacity-100 translate-y-0 pointer-events-auto'
+                    : 'opacity-0 -translate-y-2 pointer-events-none'
+                )}
+              >
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleLangChange(lang.code)
+                    }}
+                    className={cn(
+                      'w-full flex items-center gap-3 px-4 py-3 text-left transition-colors',
+                      currentLang === lang.code
+                        ? 'bg-primary-50 text-primary font-medium'
+                        : 'text-gray-700 hover:bg-gray-50'
+                    )}
+                  >
+                    <span className="text-xl">{lang.flag}</span>
+                    <span>{lang.fullLabel}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
 
             {/* Mobile Menu Button */}
             <button
@@ -257,31 +300,7 @@ export default function Header() {
               )
             })}
 
-            {/* Mobile Language Selector */}
             <div className="pt-4 border-t border-gray-200 mt-2">
-              <p className="px-4 text-sm text-gray-500 mb-2">
-                {currentLang === 'en' ? 'Language' : 'Langue'}
-              </p>
-              <div className="flex gap-2 px-4">
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => handleLangChange(lang.code)}
-                    className={cn(
-                      'flex items-center gap-2 px-4 py-2 rounded-lg transition-colors flex-1 justify-center',
-                      currentLang === lang.code
-                        ? 'bg-primary text-white font-medium'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    )}
-                  >
-                    <span>{lang.flag}</span>
-                    <span>{lang.label}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="pt-4">
               <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button
                   variant="primary"
