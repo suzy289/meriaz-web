@@ -1,16 +1,15 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { Facebook, Instagram, Linkedin, Twitter, MessageCircle, Mail, MapPin } from 'lucide-react'
-import { scrollToSection, whatsappLink, whatsappNumber } from '@/lib/utils'
+import { whatsappLink, whatsappNumber } from '@/lib/utils'
 
 const quickLinks = [
-  { label: 'Accueil', href: 'hero' },
-  { label: 'Services', href: 'services' },
-  { label: 'Produits', href: 'products' },
-  { label: 'Réalisations', href: 'portfolio' },
-  { label: 'Références', href: 'references' },
-  { label: 'Contact', href: 'contact' },
+  { label: 'Accueil', href: '/' },
+  { label: 'Références', href: '/references' },
+  { label: 'À propos', href: '/a-propos' },
+  { label: 'Contact', href: '/contact' },
 ]
 
 const products = [
@@ -80,12 +79,12 @@ export default function Footer() {
             <ul className="space-y-3">
               {quickLinks.map((link, index) => (
                 <li key={index}>
-                  <button
-                    onClick={() => scrollToSection(link.href)}
+                  <Link
+                    href={link.href}
                     className="text-gray-400 hover:text-white transition-colors duration-200"
                   >
                     {link.label}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -167,4 +166,3 @@ export default function Footer() {
     </footer>
   )
 }
-

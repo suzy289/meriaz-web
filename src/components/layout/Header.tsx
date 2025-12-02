@@ -2,57 +2,65 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import { cn, scrollToSection } from '@/lib/utils'
 import Button from '@/components/ui/Button'
 
 const navItems = [
-  { label: 'Accueil', href: 'hero' },
-  { label: 'Services', href: 'services' },
-  { label: 'Produits', href: 'products' },
-  { label: 'Réalisations', href: 'portfolio' },
-  { label: 'Références', href: 'references' },
-  { label: 'À propos', href: 'why-meriaz' },
-  { label: 'Contact', href: 'contact' },
+  { label: 'Accueil', href: '/', isPage: true },
+  { label: 'Services', href: 'services', isPage: false },
+  { label: 'Produits', href: 'products', isPage: false },
+  { label: 'Réalisations', href: 'portfolio', isPage: false },
+  { label: 'Références', href: '/references', isPage: true },
+  { label: 'À propos', href: '/a-propos', isPage: true },
+  { label: 'Contact', href: '/contact', isPage: true },
 ]
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('hero')
+  const pathname = usePathname()
+  const isHomePage = pathname === '/'
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
-
-      // Update active section based on scroll position
-      const sections = navItems.map((item) => item.href)
-      for (const section of sections.reverse()) {
-        const element = document.getElementById(section)
-        if (element) {
-          const rect = element.getBoundingClientRect()
-          if (rect.top <= 150) {
-            setActiveSection(section)
-            break
-          }
-        }
-      }
     }
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleNavClick = (sectionId: string) => {
-    scrollToSection(sectionId)
-    setIsMobileMenuOpen(false)
+  const handleNavClick = (item: typeof navItems[0]) => {
+    if (item.isPage) {
+      setIsMobileMenuOpen(false)
+    } else {
+      if (isHomePage) {
+        scrollToSection(item.href)
+      } else {
+        window.location.href = `/#${item.href}`
+      }
+      setIsMobileMenuOpen(false)
+    }
   }
+
+  const isActive = (item: typeof navItems[0]) => {
+    if (item.isPage) {
+      return pathname === item.href
+    }
+    return false
+  }
+
+  // On non-home pages, header should always have white background
+  const showWhiteBg = isScrolled || !isHomePage
 
   return (
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled
+        showWhiteBg
           ? 'bg-white/95 backdrop-blur-md shadow-lg'
           : 'bg-transparent'
       )}
@@ -60,8 +68,8 @@ export default function Header() {
       <div className="container-custom">
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
-          <button
-            onClick={() => handleNavClick('hero')}
+          <Link
+            href="/"
             className="flex items-center group"
           >
             <Image
@@ -71,43 +79,59 @@ export default function Header() {
               height={45}
               className={cn(
                 "h-10 w-auto transition-all duration-300",
-                isScrolled ? "brightness-0" : "brightness-100"
+                showWhiteBg ? "brightness-0" : "brightness-100"
               )}
               priority
             />
-          </button>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
-              <button
-                key={item.href}
-                onClick={() => handleNavClick(item.href)}
-                className={cn(
-                  'px-4 py-2 rounded-lg font-medium transition-all duration-300 relative',
-                  isScrolled
-                    ? activeSection === item.href
-                      ? 'text-primary bg-primary-50'
-                      : 'text-gray-700 hover:text-primary hover:bg-gray-100'
-                    : activeSection === item.href
-                      ? 'text-white bg-white/20'
+              item.isPage ? (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    'px-4 py-2 rounded-lg font-medium transition-all duration-300 relative',
+                    showWhiteBg
+                      ? isActive(item)
+                        ? 'text-primary bg-primary-50'
+                        : 'text-gray-700 hover:text-primary hover:bg-gray-100'
+                      : isActive(item)
+                        ? 'text-white bg-white/20'
+                        : 'text-white/90 hover:text-white hover:bg-white/10'
+                  )}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <button
+                  key={item.href}
+                  onClick={() => handleNavClick(item)}
+                  className={cn(
+                    'px-4 py-2 rounded-lg font-medium transition-all duration-300 relative',
+                    showWhiteBg
+                      ? 'text-gray-700 hover:text-primary hover:bg-gray-100'
                       : 'text-white/90 hover:text-white hover:bg-white/10'
-                )}
-              >
-                {item.label}
-              </button>
+                  )}
+                >
+                  {item.label}
+                </button>
+              )
             ))}
           </div>
 
           {/* CTA Button */}
           <div className="hidden lg:block">
-            <Button
-              variant="primary"
-              size="md"
-              onClick={() => handleNavClick('contact')}
-            >
-              Demander un devis
-            </Button>
+            <Link href="/contact">
+              <Button
+                variant="primary"
+                size="md"
+              >
+                Demander un devis
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -115,7 +139,7 @@ export default function Header() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={cn(
               'lg:hidden p-2 rounded-lg transition-colors',
-              isScrolled
+              showWhiteBg
                 ? 'text-gray-900 hover:bg-gray-100'
                 : 'text-white hover:bg-white/10'
             )}
@@ -142,28 +166,40 @@ export default function Header() {
         <div className="container-custom py-6">
           <div className="flex flex-col gap-2">
             {navItems.map((item) => (
-              <button
-                key={item.href}
-                onClick={() => handleNavClick(item.href)}
-                className={cn(
-                  'px-4 py-3 rounded-xl font-medium text-left transition-all duration-200',
-                  activeSection === item.href
-                    ? 'text-primary bg-primary-50'
-                    : 'text-gray-700 hover:text-primary hover:bg-gray-50'
-                )}
-              >
-                {item.label}
-              </button>
+              item.isPage ? (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={cn(
+                    'px-4 py-3 rounded-xl font-medium text-left transition-all duration-200',
+                    isActive(item)
+                      ? 'text-primary bg-primary-50'
+                      : 'text-gray-700 hover:text-primary hover:bg-gray-50'
+                  )}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <button
+                  key={item.href}
+                  onClick={() => handleNavClick(item)}
+                  className="px-4 py-3 rounded-xl font-medium text-left transition-all duration-200 text-gray-700 hover:text-primary hover:bg-gray-50"
+                >
+                  {item.label}
+                </button>
+              )
             ))}
             <div className="pt-4 border-t border-gray-200 mt-2">
-              <Button
-                variant="primary"
-                size="lg"
-                className="w-full"
-                onClick={() => handleNavClick('contact')}
-              >
-                Demander un devis
-              </Button>
+              <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button
+                  variant="primary"
+                  size="lg"
+                  className="w-full"
+                >
+                  Demander un devis
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -171,4 +207,3 @@ export default function Header() {
     </header>
   )
 }
-
