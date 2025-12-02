@@ -1,0 +1,11 @@
+export { default as Hero } from './Hero'
+export { default as WhyMeriaz } from './WhyMeriaz'
+export { default as Services } from './Services'
+export { default as Products } from './Products'
+export { default as Portfolio } from './Portfolio'
+export { default as AISection } from './AISection'
+export { default as References } from './References'
+export { default as Technologies } from './Technologies'
+export { default as Process } from './Process'
+export { default as Contact } from './Contact'
+
