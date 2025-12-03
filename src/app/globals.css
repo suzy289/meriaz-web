@@ -179,5 +179,113 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  /* Portfolio scroll animations */
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes scroll-right {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .animate-scroll-left {
+    animation: scroll-left 30s linear infinite;
+  }
+
+  .animate-scroll-right {
+    animation: scroll-right 30s linear infinite;
+  }
+
+  .animate-scroll-left:hover,
+  .animate-scroll-right:hover {
+    animation-play-state: paused;
+  }
+
+  /* Rotate clockwise animation */
+  @keyframes rotate-clockwise {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-rotate-clockwise {
+    animation: rotate-clockwise 20s linear infinite;
+    transform-origin: center center;
+  }
+
+  /* Scroll up animation for text */
+  @keyframes scroll-up {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-scroll-up {
+    animation: scroll-up 1s ease-out forwards;
+  }
+
+  .animate-scroll-up-delay {
+    animation: scroll-up 1s ease-out 0.3s forwards;
+    opacity: 0;
+  }
+
+  /* Page fade-in animation */
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out forwards;
+  }
+
+  /* Rotate in animation */
+  @keyframes rotate-in {
+    0% {
+      transform: rotate(-10deg) scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: rotate(0deg) scale(1);
+      opacity: 1;
+    }
+  }
+
+  .animate-rotate-in {
+    animation: rotate-in 0.8s ease-out forwards;
+  }
+
+  .animate-rotate-in-delay {
+    animation: rotate-in 0.8s ease-out 0.2s forwards;
+    opacity: 0;
+  }
+
+  .animate-rotate-in-delay-2 {
+    animation: rotate-in 0.8s ease-out 0.4s forwards;
+    opacity: 0;
+  }
 }
 

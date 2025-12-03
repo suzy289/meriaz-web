@@ -18,23 +18,7 @@ import {
 import Image from 'next/image'
 import Button from '@/components/ui/Button'
 import Link from 'next/link'
-
-const websiteFeatures = [
-  { text: 'Hébergement inclus', icon: Shield, color: '#10B981', bgColor: 'rgba(16, 185, 129, 0.3)' }, // Green
-  { text: 'Nom de domaine', icon: Globe, color: '#3B82F6', bgColor: 'rgba(59, 130, 246, 0.3)' }, // Blue
-  { text: 'Mails professionnels', icon: Zap, color: '#F59E0B', bgColor: 'rgba(245, 158, 11, 0.3)' }, // Amber
-  { text: 'Design professionnel', icon: Sparkles, color: '#EC4899', bgColor: 'rgba(236, 72, 153, 0.3)' }, // Pink
-  { text: 'Photos & Logo', icon: Star, color: '#8B5CF6', bgColor: 'rgba(139, 92, 246, 0.3)' }, // Purple
-  { text: 'SEO optimisé', icon: Rocket, color: '#FF4500', bgColor: 'rgba(255, 69, 0, 0.3)' }, // Orange
-]
-
-const erpFeatures = [
-  { icon: Cog, text: 'Analyse de vos besoins métier' },
-  { icon: Building2, text: 'Architecture technique' },
-  { icon: Rocket, text: 'Développement & intégration' },
-  { icon: Users, text: 'Formation des équipes' },
-  { icon: HeadphonesIcon, text: 'Maintenance & évolution' },
-]
+import { useLanguage } from '@/contexts/LanguageContext'
 
 const backgroundImages = [
   '/digital-marketing.webp',
@@ -42,6 +26,24 @@ const backgroundImages = [
 ]
 
 export default function Services() {
+  const { t } = useLanguage()
+  
+  const websiteFeatures = [
+    { text: t.services.popular.feature1, icon: Shield, color: '#10B981', bgColor: 'rgba(16, 185, 129, 0.3)' }, // Green
+    { text: t.services.popular.feature2, icon: Globe, color: '#3B82F6', bgColor: 'rgba(59, 130, 246, 0.3)' }, // Blue
+    { text: t.services.popular.feature3, icon: Zap, color: '#F59E0B', bgColor: 'rgba(245, 158, 11, 0.3)' }, // Amber
+    { text: t.services.popular.feature4, icon: Sparkles, color: '#EC4899', bgColor: 'rgba(236, 72, 153, 0.3)' }, // Pink
+    { text: t.services.popular.feature5, icon: Star, color: '#8B5CF6', bgColor: 'rgba(139, 92, 246, 0.3)' }, // Purple
+    { text: t.services.popular.feature6, icon: Rocket, color: '#FF4500', bgColor: 'rgba(255, 69, 0, 0.3)' }, // Orange
+  ]
+
+  const erpFeatures = [
+    { icon: Cog, text: t.services.erp.feature1 },
+    { icon: Building2, text: t.services.erp.feature2 },
+    { icon: Rocket, text: t.services.erp.feature3 },
+    { icon: Users, text: t.services.erp.feature4 },
+    { icon: HeadphonesIcon, text: t.services.erp.feature5 },
+  ]
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [visibleFeatures, setVisibleFeatures] = useState<number[]>([])
 
@@ -85,7 +87,7 @@ export default function Services() {
   }, [])
 
   return (
-    <section id="services" className="relative py-24 overflow-hidden">
+    <section id="services" className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
       {/* Background with shapes */}
       <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-white to-gray-50">
         {/* Large floating blobs - more visible */}
@@ -131,40 +133,28 @@ export default function Services() {
         />
       </div>
 
-      <div className="container-custom relative z-10">
+      <div className="container-custom relative z-10 px-4 sm:px-6">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-primary font-semibold text-sm">Nos Services</span>
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 md:mb-16">
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-primary/10 rounded-full mb-4 sm:mb-6">
+            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
+            <span className="text-primary font-semibold text-xs sm:text-sm">{t.services.badge}</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Faites passer votre business au{' '}
-            <span className="relative inline-block">
-              <span className="text-gradient-orange">niveau supérieur</span>
-              <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 12" fill="none">
-                <path d="M2 10C50 4 150 2 298 10" stroke="url(#serviceGradient)" strokeWidth="4" strokeLinecap="round"/>
-                <defs>
-                  <linearGradient id="serviceGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#F97316"/>
-                    <stop offset="100%" stopColor="#FBBF24"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-            </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+            {t.services.title}
           </h2>
-          <p className="text-xl text-gray-600">
-            Du simple site vitrine jusqu&apos;aux plateformes métiers complexes, nous construisons vos outils digitaux de A à Z.
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 px-4 sm:px-0">
+            {t.services.subtitle}
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-stretch">
           {/* Website offer - Main Card */}
           <div className="relative group h-full">
             {/* Glow effect */}
             <div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-[2rem] blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
             
-            <div className="relative rounded-3xl p-8 md:p-10 text-white overflow-hidden min-h-[650px] h-full">
+            <div className="relative rounded-3xl p-6 sm:p-8 md:p-10 text-white overflow-hidden min-h-[500px] sm:min-h-[600px] md:min-h-[650px] h-full">
               {/* Background Images with crossfade */}
               <div className="absolute inset-0">
                 {backgroundImages.map((src, index) => (
@@ -188,6 +178,8 @@ export default function Services() {
                 ))}
                 {/* Overlay gradient */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary-light/85 to-primary/90" />
+                {/* Dark overlay to reduce brightness */}
+                <div className="absolute inset-0 bg-black/30" />
               </div>
               
               {/* Animated background shapes */}
@@ -197,9 +189,9 @@ export default function Services() {
 
               <div className="relative h-full flex flex-col">
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary rounded-full mb-6 self-start">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 rounded-full mb-6 self-start border border-gray-700">
                   <span className="text-lg">🔥</span>
-                  <span className="text-gray-900 font-bold text-sm uppercase tracking-wide">Offre Populaire</span>
+                  <span className="text-white font-bold text-sm uppercase tracking-wide">{t.services.popular.badge}</span>
                 </div>
 
                 {/* Icon & Title */}
@@ -209,22 +201,25 @@ export default function Services() {
                   </div>
                   <div>
                     <h3 className="text-2xl md:text-3xl font-bold leading-tight">
-                      Opération « Tout le monde, son site internet »
+                      {t.services.popular.title}
                     </h3>
                   </div>
                 </div>
 
                 {/* Price */}
                 <div className="flex items-end gap-3 mb-6">
-                  <span className="text-white/70 text-sm">À partir de</span>
+                  <span className="text-white/70 text-sm">{t.services.popular.price}</span>
                   <div className="flex items-baseline">
-                    <span className="text-5xl md:text-6xl font-bold">30 000</span>
-                    <span className="text-2xl font-semibold ml-2">XAF</span>
+                    <span className="text-5xl md:text-6xl font-bold relative inline-block">
+                      {t.services.popular.priceValue}
+                      <span className="absolute bottom-0 left-0 w-1/2 h-2 bg-gradient-to-r from-orange-500 to-transparent rounded-full"></span>
+                    </span>
+                    <span className="text-2xl font-semibold ml-2">{t.services.popular.currency}</span>
                   </div>
                 </div>
 
                 <p className="text-white/90 mb-8 text-lg leading-relaxed">
-                  Présence en ligne professionnelle, rapide et abordable pour entrepreneurs, TPE, PME et commerçants.
+                  {t.services.popular.description}
                 </p>
 
                 {/* Features Grid - Colorful icons */}
@@ -256,7 +251,7 @@ export default function Services() {
                       size="lg"
                       className="bg-white text-primary hover:bg-gray-100 hover:text-primary group shadow-xl"
                     >
-                      Créer mon site maintenant
+{t.services.popular.cta}
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
@@ -278,18 +273,18 @@ export default function Services() {
               
               <div className="relative h-full flex flex-col">
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-100 rounded-full mb-6 self-start">
-                  <Building2 className="w-4 h-4" style={{ color: '#FF4500' }} />
-                  <span className="text-gray-700 font-semibold text-sm">Solutions Entreprise</span>
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 rounded-full mb-6 self-start border border-gray-700">
+                  <Building2 className="w-4 h-4 text-white" />
+                  <span className="text-white font-semibold text-sm">{t.services.erp.badge}</span>
                 </div>
 
                 {/* Title */}
                 <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-                  ERP, SaaS & Applications Métiers
+                  {t.services.erp.title}
                 </h3>
 
                 <p className="text-gray-600 mb-8 text-lg leading-relaxed">
-                  Solutions sur mesure pour gérer clients, finances, opérations et équipes. Nous concevons l&apos;outil parfait pour votre activité.
+                  {t.services.erp.description}
                 </p>
 
                 {/* Features List with sequential animation */}
@@ -328,7 +323,7 @@ export default function Services() {
                       size="lg"
                       className="bg-blue-600 hover:bg-white hover:text-blue-600 border-2 border-blue-600 group transition-all duration-300"
                     >
-                      Parler avec un expert
+{t.services.erp.cta}
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
@@ -343,27 +338,26 @@ export default function Services() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
             {/* Livraison rapide */}
             <div className="group">
-              <div className="h-full rounded-2xl bg-white border border-orange-200 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden">
-                <div className="relative bg-gradient-to-r from-orange-500 to-red-600 p-6 pb-12">
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(255,255,255,0.2),_transparent_60%)]" />
+              <div className="h-full rounded-2xl bg-white border-2 border-gray-200 shadow-lg hover:shadow-2xl hover:border-gray-300 transition-all duration-500 overflow-hidden">
+                <div className="relative bg-gray-900 p-6 pb-12">
                   <div className="relative flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white border border-white/30 group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-14 h-14 rounded-xl bg-gray-800 flex items-center justify-center text-white border border-gray-700 group-hover:scale-110 transition-transform duration-300">
                       <Zap className="w-8 h-8" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-white leading-tight">Livraison rapide</h3>
+                      <h3 className="text-xl font-bold text-white leading-tight">{t.services.trust.fast.title}</h3>
                     </div>
                   </div>
                   <div className="absolute -bottom-4 right-6">
-                    <span className="inline-flex items-center gap-1.5 bg-emerald-500 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg">
+                    <span className="inline-flex items-center gap-1.5 bg-orange-500 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg">
                       <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                      5 jours
+                      {t.services.trust.fast.badge}
                     </span>
                   </div>
                 </div>
                 <div className="p-6 pt-8">
                   <p className="text-gray-600 text-sm leading-relaxed">
-                    Votre site internet livré en seulement 5 jours ouvrés. Design, développement et mise en ligne inclus.
+                    {t.services.trust.fast.description}
                   </p>
                 </div>
               </div>
@@ -371,27 +365,26 @@ export default function Services() {
 
             {/* Support inclus */}
             <div className="group">
-              <div className="h-full rounded-2xl bg-white border border-blue-200 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden">
-                <div className="relative bg-gradient-to-r from-blue-500 to-indigo-600 p-6 pb-12">
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(255,255,255,0.2),_transparent_60%)]" />
+              <div className="h-full rounded-2xl bg-white border-2 border-gray-200 shadow-lg hover:shadow-2xl hover:border-gray-300 transition-all duration-500 overflow-hidden">
+                <div className="relative bg-gray-800 p-6 pb-12">
                   <div className="relative flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white border border-white/30 group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-14 h-14 rounded-xl bg-gray-900 flex items-center justify-center text-white border border-gray-700 group-hover:scale-110 transition-transform duration-300">
                       <Shield className="w-8 h-8" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-white leading-tight">Support inclus</h3>
+                      <h3 className="text-xl font-bold text-white leading-tight">{t.services.trust.support.title}</h3>
                     </div>
                   </div>
                   <div className="absolute -bottom-4 right-6">
-                    <span className="inline-flex items-center gap-1.5 bg-emerald-500 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg">
+                    <span className="inline-flex items-center gap-1.5 bg-blue-500 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg">
                       <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                      24/7
+                      {t.services.trust.support.badge}
                     </span>
                   </div>
                 </div>
                 <div className="p-6 pt-8">
                   <p className="text-gray-600 text-sm leading-relaxed">
-                    Assistance technique disponible 24h/24 et 7j/7. Nous sommes toujours là pour vous accompagner.
+                    {t.services.trust.support.description}
                   </p>
                 </div>
               </div>
@@ -399,27 +392,26 @@ export default function Services() {
 
             {/* Satisfaction garantie */}
             <div className="group">
-              <div className="h-full rounded-2xl bg-white border border-emerald-200 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden">
-                <div className="relative bg-gradient-to-r from-emerald-500 to-teal-600 p-6 pb-12">
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(255,255,255,0.2),_transparent_60%)]" />
+              <div className="h-full rounded-2xl bg-white border-2 border-gray-200 shadow-lg hover:shadow-2xl hover:border-gray-300 transition-all duration-500 overflow-hidden">
+                <div className="relative bg-gray-900 p-6 pb-12">
                   <div className="relative flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white border border-white/30 group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-14 h-14 rounded-xl bg-gray-800 flex items-center justify-center text-white border border-gray-700 group-hover:scale-110 transition-transform duration-300">
                       <Star className="w-8 h-8" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-white leading-tight">Satisfaction garantie</h3>
+                      <h3 className="text-xl font-bold text-white leading-tight">{t.services.trust.satisfaction.title}</h3>
                     </div>
                   </div>
                   <div className="absolute -bottom-4 right-6">
-                    <span className="inline-flex items-center gap-1.5 bg-yellow-400 text-yellow-900 px-4 py-1.5 rounded-full text-xs font-bold shadow-lg">
-                      <span className="w-1.5 h-1.5 rounded-full bg-yellow-900 animate-pulse" />
-                      98%
+                    <span className="inline-flex items-center gap-1.5 bg-emerald-500 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg">
+                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                      {t.services.trust.satisfaction.badge}
                     </span>
                   </div>
                 </div>
                 <div className="p-6 pt-8">
                   <p className="text-gray-600 text-sm leading-relaxed">
-                    98% de nos clients sont satisfaits de nos services. Votre réussite est notre priorité absolue.
+                    {t.services.trust.satisfaction.description}
                   </p>
                 </div>
               </div>
@@ -438,7 +430,7 @@ export default function Services() {
                   ? 'w-8'
                   : 'bg-gray-300 hover:bg-gray-400'
               }`}
-              style={{ backgroundColor: index === currentImageIndex ? '#FF4500' : undefined }}
+              style={{ backgroundColor: index === currentImageIndex ? '#374151' : undefined }}
               aria-label={`Image ${index + 1}`}
             />
           ))}

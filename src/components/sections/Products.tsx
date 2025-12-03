@@ -3,75 +3,75 @@
 import { useState } from 'react'
 import { ExternalLink, MessageSquare, Building, Wallet, Sparkles, ChevronRight, Check, Globe, Zap, Users } from 'lucide-react'
 import Button from '@/components/ui/Button'
-
-const products = [
-  {
-    name: 'Otolid',
-    badge: 'En bêta testing',
-    badgeColor: 'bg-blue-500',
-    icon: MessageSquare,
-    shortDesc: 'Messages automatisés par IA',
-    description:
-      'Plateforme de messages automatisés par IA pour WhatsApp. Répondez à vos clients 24h/24, automatisez les confirmations, relances, réponses fréquentes et campagnes, sans perdre votre touche humaine.',
-    features: [
-      'Réponses automatiques 24/7',
-      'Intégration WhatsApp Business',
-      'Campagnes marketing ciblées',
-      'Analyse des conversations',
-    ],
-    link: 'https://www.otolid.io',
-    cta: 'Découvrir Otolid',
-    gradient: 'from-blue-500 to-cyan-500',
-    bgGradient: 'from-blue-500/20 via-cyan-500/10 to-transparent',
-  },
-  {
-    name: 'Kazimo',
-    badge: 'En développement',
-    badgeColor: 'bg-amber-500',
-    icon: Building,
-    shortDesc: 'Core banking pour microfinance',
-    description:
-      'Plateforme de core banking modulaire pour les institutions de microfinance. Suivez les comptes clients, les prêts, les épargnes et les opérations au quotidien avec une solution pensée pour vos réalités terrain.',
-    features: [
-      'Gestion des comptes clients',
-      'Suivi des prêts et épargnes',
-      'Rapports financiers automatisés',
-      'Interface mobile friendly',
-    ],
-    link: 'https://www.kazimo.app',
-    cta: 'En savoir plus',
-    gradient: 'from-orange-500 to-red-500',
-    bgGradient: 'from-orange-500/20 via-red-500/10 to-transparent',
-  },
-  {
-    name: 'Wemonii',
-    badge: 'En développement',
-    badgeColor: 'bg-emerald-500',
-    icon: Wallet,
-    shortDesc: 'Crowdfunding GAB Mobile Money',
-    description:
-      'Plateforme de crowdfunding dédiée aux Guichets Automatiques de Billets Mobile Money. Elle permet de financer et déployer des GAB Mobile Money en s\'appuyant sur la force de la communauté et des investisseurs.',
-    features: [
-      'Financement participatif',
-      'Déploiement GAB Mobile Money',
-      'Suivi des investissements',
-      'Rendements transparents',
-    ],
-    link: 'https://www.wemonii.com',
-    cta: 'Découvrir Wemonii',
-    gradient: 'from-emerald-500 to-teal-500',
-    bgGradient: 'from-emerald-500/20 via-teal-500/10 to-transparent',
-  },
-]
-
-const futureProducts = [
-  { name: 'Jonnie', desc: 'HRMS/DMS', icon: Users },
-  { name: 'Assure', desc: 'Microassurance', icon: Zap },
-  { name: 'IA Solutions', desc: 'Support & Analytics', icon: Globe },
-]
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function Products() {
+  const { t } = useLanguage()
   const [selectedIndex, setSelectedIndex] = useState(0)
+  
+  const products = [
+    {
+      name: t.products.otolid.name,
+      badge: t.products.otolid.badge,
+      badgeColor: 'bg-blue-500',
+      icon: MessageSquare,
+      shortDesc: t.products.otolid.shortDesc,
+      description: t.products.otolid.description,
+      features: [
+        t.products.otolid.feature1,
+        t.products.otolid.feature2,
+        t.products.otolid.feature3,
+        t.products.otolid.feature4,
+      ],
+      link: 'https://www.otolid.io',
+      cta: t.products.otolid.cta,
+      gradient: 'from-blue-500 to-cyan-500',
+      bgGradient: 'from-blue-500/20 via-cyan-500/10 to-transparent',
+    },
+    {
+      name: t.products.kazimo.name,
+      badge: t.products.kazimo.badge,
+      badgeColor: 'bg-amber-500',
+      icon: Building,
+      shortDesc: t.products.kazimo.shortDesc,
+      description: t.products.kazimo.description,
+      features: [
+        t.products.kazimo.feature1,
+        t.products.kazimo.feature2,
+        t.products.kazimo.feature3,
+        t.products.kazimo.feature4,
+      ],
+      link: 'https://www.kazimo.app',
+      cta: t.products.kazimo.cta,
+      gradient: 'from-orange-500 to-red-500',
+      bgGradient: 'from-orange-500/20 via-red-500/10 to-transparent',
+    },
+    {
+      name: t.products.wemonii.name,
+      badge: t.products.wemonii.badge,
+      badgeColor: 'bg-emerald-500',
+      icon: Wallet,
+      shortDesc: t.products.wemonii.shortDesc,
+      description: t.products.wemonii.description,
+      features: [
+        t.products.wemonii.feature1,
+        t.products.wemonii.feature2,
+        t.products.wemonii.feature3,
+        t.products.wemonii.feature4,
+      ],
+      link: 'https://www.wemonii.com',
+      cta: t.products.wemonii.cta,
+      gradient: 'from-emerald-500 to-teal-500',
+      bgGradient: 'from-emerald-500/20 via-teal-500/10 to-transparent',
+    },
+  ]
+
+  const futureProducts = [
+    { name: 'Jonnie', desc: 'HRMS/DMS', icon: Users },
+    { name: 'Assure', desc: 'Microassurance', icon: Zap },
+    { name: 'IA Solutions', desc: 'Support & Analytics', icon: Globe },
+  ]
+
   const selectedProduct = products[selectedIndex]
   const Icon = selectedProduct.icon
 
@@ -105,14 +105,14 @@ export default function Products() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6 border border-white/10">
             <Sparkles className="w-4 h-4 text-orange-400" />
-            <span className="text-white/90 font-semibold text-sm">Nos Produits</span>
+            <span className="text-white/90 font-semibold text-sm">{t.products.badge}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Découvrez les produits{' '}
-            <span className="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">Meriaz</span>
+            {t.products.title}{' '}
+            <span className="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">{t.products.titleHighlight}</span>
           </h2>
           <p className="text-white/60 text-lg max-w-2xl mx-auto">
-            Nos propres plateformes pour répondre aux besoins concrets des entrepreneurs africains.
+            {t.products.subtitle}
           </p>
         </div>
 
@@ -122,7 +122,7 @@ export default function Products() {
           {/* Left Side - Product List */}
           <div className="lg:col-span-2 order-1 lg:order-1 space-y-4">
             <h4 className="text-white/60 text-sm font-semibold uppercase tracking-wider mb-4 px-2">
-              Sélectionnez un produit
+              {t.products.selectProduct}
             </h4>
             
             {products.map((product, index) => {
@@ -162,7 +162,7 @@ export default function Products() {
             <div className="mt-8 p-5 bg-gradient-to-br from-white/5 to-white/0 rounded-2xl border border-white/10">
               <h5 className="text-white/80 font-semibold mb-4 flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-orange-400" />
-                Bientôt disponibles
+{t.products.comingSoon}
               </h5>
               <div className="space-y-3">
                 {futureProducts.map((product, idx) => {

@@ -2,16 +2,18 @@
 
 import { Check, ArrowRight, MessageCircle, Sparkles, Rocket, Zap } from 'lucide-react'
 import Button from '@/components/ui/Button'
-import { whatsappLink } from '@/lib/utils'
+import { getWhatsAppLink } from '@/lib/utils'
 import Link from 'next/link'
-
-const stats = [
-  { value: '50+', label: 'Clients' },
-  { value: '5j', label: 'Délai' },
-  { value: '50%', label: 'Économies' },
-]
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function Hero() {
+  const { t, language } = useLanguage()
+  
+  const stats = [
+    { value: t.hero.stat1, label: t.hero.stat1Label },
+    { value: t.hero.stat2, label: t.hero.stat2Label },
+    { value: t.hero.stat3, label: t.hero.stat3Label },
+  ]
   return (
     <section
       id="hero"
@@ -35,104 +37,93 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative container-custom pt-32 pb-20 md:pt-40 md:pb-28">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="relative container-custom pt-24 sm:pt-32 pb-16 sm:pb-20 md:pt-40 md:pb-28 px-4 sm:px-6">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
           {/* Left: Text content - NEW DESIGN */}
           <div className="text-center lg:text-left">
             {/* Top badge with price */}
-            <div className="inline-flex items-center gap-3 mb-8 animate-fade-in">
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
-                <Sparkles className="w-4 h-4 text-secondary" />
-                <span className="text-white/90 text-sm font-medium">Sites web pro</span>
+            <div className="inline-flex flex-wrap items-center gap-2 sm:gap-3 mb-6 sm:mb-8 animate-fade-in justify-center lg:justify-start">
+              <div className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-secondary" />
+                <span className="text-white/90 text-xs sm:text-sm font-medium">{t.hero.badge}</span>
               </div>
-              <div className="px-4 py-2 bg-secondary rounded-full">
-                <span className="text-gray-900 text-sm font-bold">À partir de 30 000 XAF</span>
+              <div className="px-3 sm:px-4 py-1.5 sm:py-2 bg-secondary rounded-full">
+                <span className="text-gray-900 text-xs sm:text-sm font-bold">À partir de 30 000 XAF</span>
               </div>
             </div>
 
             {/* Main heading with highlight */}
-            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-white mb-6 leading-[1.15] animate-fade-in-up">
-              <span className="block mb-2">Transformez vos idées</span>
-              <span className="block">
-                en{' '}
-                <span className="relative inline-block">
-                  <span className="relative z-10 text-gradient-orange">solutions digitales</span>
-                  <span className="absolute bottom-1 left-0 right-0 h-3 bg-secondary/30 -rotate-1 rounded"></span>
-                </span>
-              </span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-white mb-4 sm:mb-6 leading-[1.15] animate-fade-in-up">
+              {t.hero.title}
             </h1>
 
             {/* Subtitle with icons */}
-            <div className="space-y-4 mb-8 animate-fade-in-up animation-delay-200">
-              <p className="text-xl text-white/80 leading-relaxed">
-                Meriaz est votre partenaire technologique pour créer des 
-                <span className="text-white font-semibold"> sites internet</span>, 
-                <span className="text-white font-semibold"> ERP</span>, 
-                <span className="text-white font-semibold"> SaaS</span> et 
-                <span className="text-white font-semibold"> automatisations IA</span>.
+            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8 animate-fade-in-up animation-delay-200">
+              <p className="text-base sm:text-lg md:text-xl text-white/80 leading-relaxed px-4 sm:px-0">
+                {t.hero.subtitle}
               </p>
             </div>
 
             {/* Feature tags */}
-            <div className="flex flex-wrap gap-3 mb-8 justify-center lg:justify-start animate-fade-in-up animation-delay-300">
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-accent/20 rounded-lg border border-accent/30">
-                <Zap className="w-4 h-4 text-accent" />
-                <span className="text-white text-sm">Livraison rapide</span>
+            <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8 justify-center lg:justify-start animate-fade-in-up animation-delay-300">
+              <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-accent/20 rounded-lg border border-accent/30">
+                <Zap className="w-3 h-3 sm:w-4 sm:h-4 text-accent" />
+                <span className="text-white text-xs sm:text-sm">{t.hero.feature1}</span>
               </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/20 rounded-lg border border-primary/30">
-                <Rocket className="w-4 h-4 text-primary-light" />
-                <span className="text-white text-sm">Tout inclus</span>
+              <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-primary/20 rounded-lg border border-primary/30">
+                <Rocket className="w-3 h-3 sm:w-4 sm:h-4 text-primary-light" />
+                <span className="text-white text-xs sm:text-sm">{t.hero.feature2}</span>
               </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-secondary/20 rounded-lg border border-secondary/30">
-                <Check className="w-4 h-4 text-secondary" />
-                <span className="text-white text-sm">Support 24/7</span>
+              <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-secondary/20 rounded-lg border border-secondary/30">
+                <Check className="w-3 h-3 sm:w-4 sm:h-4 text-secondary" />
+                <span className="text-white text-xs sm:text-sm">{t.hero.feature3}</span>
               </div>
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10 animate-fade-in-up animation-delay-400">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-8 sm:mb-10 animate-fade-in-up animation-delay-400">
               <Link href="/contact">
                 <Button
                   variant="primary"
                   size="lg"
                   className="group w-full sm:w-auto"
                 >
-                  Démarrer mon projet
+                  {t.hero.cta1}
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <Button
                 variant="outline"
                 size="lg"
-                onClick={() => window.open(whatsappLink, '_blank')}
+                onClick={() => window.open(getWhatsAppLink('hero', language), '_blank')}
                 className="group"
               >
-                <MessageCircle className="w-5 h-5" />
-                WhatsApp
+                <MessageCircle className="w-5 h-5" style={{ color: '#25D366' }} />
+                {t.hero.cta2}
               </Button>
             </div>
 
             {/* Stats row */}
-            <div className="flex items-center gap-8 justify-center lg:justify-start animate-fade-in-up animation-delay-500">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6 md:gap-8 justify-center lg:justify-start animate-fade-in-up animation-delay-500">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center lg:text-left">
-                  <div className="text-2xl md:text-3xl font-bold text-white">{stat.value}</div>
-                  <div className="text-white/60 text-sm">{stat.label}</div>
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">{stat.value}</div>
+                  <div className="text-white/60 text-xs sm:text-sm">{stat.label}</div>
                 </div>
               ))}
-              <div className="hidden sm:block h-12 w-px bg-white/20" />
+              <div className="hidden sm:block h-8 sm:h-12 w-px bg-white/20" />
               <div className="hidden sm:flex items-center gap-2">
-                <div className="flex -space-x-2">
+                <div className="flex -space-x-1.5 sm:-space-x-2">
                   {['A', 'M', 'K'].map((letter, i) => (
                     <div
                       key={i}
-                      className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary-light border-2 border-white/20 flex items-center justify-center text-xs font-bold text-white"
+                      className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-primary to-primary-light border-2 border-white/20 flex items-center justify-center text-[10px] sm:text-xs font-bold text-white"
                     >
                       {letter}
                     </div>
                   ))}
                 </div>
-                <span className="text-white/70 text-sm">+50 clients</span>
+                <span className="text-white/70 text-xs sm:text-sm">+50 clients</span>
               </div>
             </div>
           </div>

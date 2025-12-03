@@ -10,12 +10,15 @@ import {
   Briefcase, 
   Package, 
   FolderOpen, 
-  ChevronDown
+  ChevronDown,
+  Home
 } from 'lucide-react'
 import { cn, scrollToSection } from '@/lib/utils'
 import Button from '@/components/ui/Button'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 const navItems = [
+  { label: 'Accueil', labelEn: 'Home', href: '/', isPage: true, icon: Home },
   { label: 'Services', labelEn: 'Services', href: 'services', isPage: false, icon: Briefcase },
   { label: 'Produits', labelEn: 'Products', href: 'products', isPage: false, icon: Package },
   { label: 'Réalisations', labelEn: 'Portfolio', href: 'portfolio', isPage: false, icon: FolderOpen },
@@ -49,14 +52,15 @@ const languages = [
 ]
 
 export default function Header() {
+  const { language: currentLang, setLanguage: setCurrentLang, t } = useLanguage()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false)
   const [isMobileLangMenuOpen, setIsMobileLangMenuOpen] = useState(false)
-  const [currentLang, setCurrentLang] = useState('fr')
   const pathname = usePathname()
   const isHomePage = pathname === '/'
   const mobileLangRef = useRef<HTMLDivElement>(null)
+  const desktopLangRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,7 +74,9 @@ export default function Header() {
   // Close language menus when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      setIsLangMenuOpen(false)
+      if (desktopLangRef.current && !desktopLangRef.current.contains(e.target as Node)) {
+        setIsLangMenuOpen(false)
+      }
       if (mobileLangRef.current && !mobileLangRef.current.contains(e.target as Node)) {
         setIsMobileLangMenuOpen(false)
       }
@@ -83,18 +89,29 @@ export default function Header() {
   }, [isLangMenuOpen, isMobileLangMenuOpen])
 
   const handleNavClick = (item: typeof navItems[0]) => {
-    if (isHomePage) {
+    if (item.isPage) {
+      // If it's a page link, navigate directly
+      if (item.href === '/') {
+        window.location.href = '/'
+      } else {
+        window.location.href = item.href
+      }
+    } else if (isHomePage) {
+      // If it's a section on the home page, scroll to it
       scrollToSection(item.href)
     } else {
+      // If we're on another page, go to home page and scroll to section
       window.location.href = `/#${item.href}`
     }
     setIsMobileMenuOpen(false)
   }
 
   const handleLangChange = (langCode: string) => {
-    setCurrentLang(langCode)
-    setIsLangMenuOpen(false)
-    setIsMobileLangMenuOpen(false)
+    if (langCode === 'fr' || langCode === 'en') {
+      setCurrentLang(langCode as 'fr' | 'en')
+      setIsLangMenuOpen(false)
+      setIsMobileLangMenuOpen(false)
+    }
   }
 
   const getLabel = (item: typeof navItems[0]) => {
@@ -129,7 +146,7 @@ export default function Header() {
               width={140}
               height={45}
               className={cn(
-                "h-10 w-auto transition-all duration-300",
+                "h-8 sm:h-10 w-auto transition-all duration-300",
                 showWhiteBg ? "brightness-0" : "brightness-100"
               )}
               priority
@@ -163,7 +180,10 @@ export default function Header() {
           {/* Right side: Language + CTA */}
           <div className="hidden lg:flex items-center gap-4 ml-8">
             {/* Language Selector Desktop */}
-            <div className="relative">
+            <div 
+              className="relative"
+              ref={desktopLangRef}
+            >
               <button
                 onClick={(e) => {
                   e.stopPropagation()
@@ -191,7 +211,7 @@ export default function Header() {
               {/* Language Dropdown Desktop */}
               <div
                 className={cn(
-                  'absolute top-full right-0 mt-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-200 min-w-[160px]',
+                  'absolute top-full right-0 mt-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-200 min-w-[160px] z-50',
                   isLangMenuOpen
                     ? 'opacity-100 translate-y-0 pointer-events-auto'
                     : 'opacity-0 -translate-y-2 pointer-events-none'
@@ -205,6 +225,7 @@ export default function Header() {
                       onClick={(e) => {
                         e.stopPropagation()
                         handleLangChange(lang.code)
+                        setIsMobileLangMenuOpen(false)
                       }}
                       className={cn(
                         'w-full flex items-center gap-3 px-4 py-3 text-left transition-colors',
@@ -226,10 +247,11 @@ export default function Header() {
             {/* CTA Button */}
             <Link href="/contact">
               <Button
-                variant="primary"
+                variant={showWhiteBg ? "secondary" : "primary"}
                 size="md"
+                className={showWhiteBg ? "bg-gray-900 text-white hover:bg-gray-800 border-gray-900" : ""}
               >
-                {currentLang === 'en' ? 'Contact us' : 'Nous contacter'}
+{t.header.contactUs}
               </Button>
             </Link>
           </div>
@@ -279,6 +301,7 @@ export default function Header() {
                       onClick={(e) => {
                         e.stopPropagation()
                         handleLangChange(lang.code)
+                        setIsMobileLangMenuOpen(false)
                       }}
                       className={cn(
                         'w-full flex items-center gap-3 px-4 py-3 text-left transition-colors',
@@ -346,11 +369,14 @@ export default function Header() {
             <div className="pt-4 border-t border-gray-200 mt-2">
               <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button
-                  variant="primary"
+                  variant={showWhiteBg ? "secondary" : "primary"}
                   size="lg"
-                  className="w-full"
+                  className={cn(
+                    "w-full",
+                    showWhiteBg ? "bg-gray-900 text-white hover:bg-gray-800 border-gray-900" : ""
+                  )}
                 >
-                  {currentLang === 'en' ? 'Contact us' : 'Nous contacter'}
+  {t.header.contactUs}
                 </Button>
               </Link>
             </div>

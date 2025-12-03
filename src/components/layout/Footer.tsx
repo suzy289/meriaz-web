@@ -20,28 +20,8 @@ import {
   Bot,
   Palette
 } from 'lucide-react'
-import { whatsappLink, whatsappNumber } from '@/lib/utils'
-
-const services = [
-  { label: 'Sites Internet', href: '/#services' },
-  { label: 'Applications Web', href: '/#services' },
-  { label: 'ERP & Solutions Métiers', href: '/#services' },
-  { label: 'Automatisation IA', href: '/#services' },
-]
-
-const products = [
-  { label: 'Otolid', href: 'https://www.otolid.io', external: true },
-  { label: 'Kazimo', href: 'https://www.kazimo.app', external: true },
-  { label: 'Wemonii', href: 'https://www.wemonii.com', external: true },
-  { label: 'Core Banking', href: '/#products' },
-]
-
-const information = [
-  { label: 'Contactez-nous', href: '/contact' },
-  { label: 'À propos', href: '/a-propos' },
-  { label: 'Références', href: '/references' },
-  { label: 'Réalisations', href: '/#portfolio' },
-]
+import { getWhatsAppLink, whatsappNumber } from '@/lib/utils'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 const socialLinks = [
   { icon: Facebook, href: '#', label: 'Facebook' },
@@ -51,7 +31,29 @@ const socialLinks = [
 ]
 
 export default function Footer() {
+  const { t, language } = useLanguage()
   const currentYear = new Date().getFullYear()
+  
+  const services = [
+    { label: t.footer.website, href: '/#services' },
+    { label: t.footer.webApp, href: '/#services' },
+    { label: t.footer.erp, href: '/#services' },
+    { label: t.footer.ai, href: '/#services' },
+  ]
+
+  const products = [
+    { label: 'Otolid', href: 'https://www.otolid.io', external: true },
+    { label: 'Kazimo', href: 'https://www.kazimo.app', external: true },
+    { label: 'Wemonii', href: 'https://www.wemonii.com', external: true },
+    { label: 'Core Banking', href: '/#products' },
+  ]
+
+  const information = [
+    { label: t.footer.contactUs, href: '/contact' },
+    { label: t.footer.about, href: '/a-propos' },
+    { label: t.footer.references, href: '/references' },
+    { label: t.footer.portfolio, href: '/#portfolio' },
+  ]
 
   return (
     <footer className="bg-gray-900 text-gray-300 relative overflow-hidden">
@@ -62,26 +64,26 @@ export default function Footer() {
       </div>
 
       {/* Main footer */}
-      <div className="container-custom pt-16 pb-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-12 mb-10">
+      <div className="container-custom pt-12 sm:pt-16 pb-6 sm:pb-8 relative z-10 px-4 sm:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-12 mb-8 sm:mb-10">
           {/* Brand column */}
           <div className="lg:col-span-2">
             {/* Logo */}
-            <div className="mb-4">
+            <div className="mb-3 sm:mb-4">
               <Image
                 src="/Copie de Fichier 6 (1).png"
                 alt="Meriaz"
                 width={160}
                 height={50}
-                className="h-12 w-auto"
+                className="h-10 sm:h-12 w-auto"
               />
             </div>
             
-            <p className="text-lg font-medium text-white mb-2">
-              Votre partenaire technologique
+            <p className="text-base sm:text-lg font-medium text-white mb-2">
+              {t.footer.tagline}
             </p>
-            <p className="text-gray-400 mb-6 max-w-sm leading-relaxed">
-              Nous aidons les entrepreneurs africains à créer des sites internet, ERP, SaaS et automatisations IA pour faire décoller leur business.
+            <p className="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6 max-w-sm leading-relaxed">
+              {t.footer.description}
             </p>
 
             {/* Social links */}
@@ -95,9 +97,9 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="w-10 h-10 bg-white/5 border border-white/10 hover:bg-primary/20 hover:border-primary/30 rounded-lg flex items-center justify-center transition-all duration-300"
+                    className="w-10 h-10 bg-white/5 border border-white/10 hover:bg-[#FF4500]/20 hover:border-[#FF4500]/30 rounded-lg flex items-center justify-center transition-all duration-300"
                   >
-                    <Icon className="w-5 h-5 text-primary" />
+                    <Icon className="w-5 h-5 text-[#FF4500]" />
                   </a>
                 )
               })}
@@ -105,12 +107,12 @@ export default function Footer() {
           </div>
 
           {/* Links Grid */}
-          <div className="lg:col-span-3 grid grid-cols-2 sm:grid-cols-3 gap-8">
+          <div className="lg:col-span-3 grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8">
             {/* Information */}
             <div>
               <h4 className="text-xs font-bold mb-4 text-white uppercase tracking-widest flex items-center gap-2">
                 <span className="w-6 h-0.5 bg-gradient-to-r from-primary to-primary/50 rounded-full"></span>
-                Information
+{t.footer.information}
               </h4>
               <ul className="space-y-2">
                 {information.map((link, index) => (
@@ -131,7 +133,7 @@ export default function Footer() {
             <div>
               <h4 className="text-xs font-bold mb-4 text-white uppercase tracking-widest flex items-center gap-2">
                 <span className="w-6 h-0.5 bg-gradient-to-r from-secondary to-secondary/50 rounded-full"></span>
-                Nos Services
+{t.footer.ourServices}
               </h4>
               <ul className="space-y-2">
                 {services.map((service, index) => (
@@ -152,7 +154,7 @@ export default function Footer() {
             <div>
               <h4 className="text-xs font-bold mb-4 text-white uppercase tracking-widest flex items-center gap-2">
                 <span className="w-6 h-0.5 bg-gradient-to-r from-accent to-accent/50 rounded-full"></span>
-                Nos Produits
+{t.footer.ourProducts}
               </h4>
               <ul className="space-y-2">
                 {products.map((product, index) => (
@@ -187,22 +189,22 @@ export default function Footer() {
         <div className="border-t border-white/10 pt-8 mb-8">
           <h4 className="text-xs font-bold mb-4 text-white uppercase tracking-widest flex items-center gap-2">
             <span className="w-6 h-0.5 bg-gradient-to-r from-primary to-primary/50 rounded-full"></span>
-            Contact
+{t.footer.contact}
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {/* WhatsApp */}
             <a
-              href={whatsappLink}
+              href={getWhatsAppLink('footer', language)}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 group"
             >
               <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-green-500/20 group-hover:border-green-500/30 transition-colors duration-300">
-                <MessageCircle className="w-4 h-4 text-green-500" />
+                <MessageCircle className="w-4 h-4" style={{ color: '#25D366' }} />
               </div>
               <div>
                 <span className="text-gray-400 group-hover:text-white transition-colors text-sm block">{whatsappNumber}</span>
-                <span className="text-xs text-gray-600">WhatsApp</span>
+                <span className="text-xs text-[#FF4500]">WhatsApp</span>
               </div>
             </a>
 
@@ -243,7 +245,7 @@ export default function Footer() {
                 <Shield className="w-4 h-4 text-primary" />
               </div>
               <p className="text-gray-400 text-xs sm:text-sm">
-                © {currentYear} Meriaz - Tous droits réservés.
+{t.footer.copyright.replace('2024', currentYear.toString())}
               </p>
             </div>
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
@@ -258,7 +260,7 @@ export default function Footer() {
               </button>
             </div>
           </div>
-          <p className="text-gray-600 text-[10px] sm:text-xs text-center mt-4 max-w-xl mx-auto">
+          <p className="text-[#FF4500] text-[10px] sm:text-xs text-center mt-4 max-w-xl mx-auto">
             Meriaz est votre partenaire technologique pour la transformation digitale des entrepreneurs africains.
           </p>
         </div>

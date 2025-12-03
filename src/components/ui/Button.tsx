@@ -14,11 +14,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const baseStyles = 'inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
 
     const variants = {
-      primary: 'bg-secondary text-white hover:bg-secondary-dark hover:shadow-lg hover:shadow-secondary/30 hover:-translate-y-0.5 focus:ring-secondary',
-      secondary: 'border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary',
-      whatsapp: 'bg-accent text-white hover:bg-accent-dark hover:shadow-lg hover:shadow-accent/30 focus:ring-accent',
-      outline: 'border-2 border-white text-white hover:bg-white hover:text-primary focus:ring-white',
-      ghost: 'text-gray-700 hover:bg-gray-100 focus:ring-gray-300',
+      primary: 'bg-secondary text-white hover:bg-gray-900 hover:text-white hover:shadow-lg hover:shadow-gray-900/30 hover:-translate-y-0.5 focus:ring-secondary transition-all duration-300',
+      secondary: 'border-2 border-primary text-primary hover:bg-gray-900 hover:text-white hover:border-gray-900 focus:ring-primary transition-all duration-300',
+      whatsapp: 'bg-accent text-white hover:bg-gray-900 hover:text-white hover:shadow-lg hover:shadow-gray-900/30 focus:ring-accent transition-all duration-300',
+      outline: 'border-2 border-white text-white hover:bg-gray-900 hover:text-white hover:border-gray-900 focus:ring-white transition-all duration-300',
+      ghost: 'text-gray-700 hover:bg-gray-900 hover:text-white focus:ring-gray-300 transition-all duration-300',
     }
 
     const sizes = {

@@ -2,12 +2,26 @@
 
 import { MessageCircle, X } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import { whatsappLink } from '@/lib/utils'
+import { getWhatsAppLink, WhatsAppSection } from '@/lib/utils'
 import { cn } from '@/lib/utils'
+import { useLanguage } from '@/contexts/LanguageContext'
+import { usePathname } from 'next/navigation'
 
 export default function WhatsAppButton() {
+  const { language } = useLanguage()
+  const pathname = usePathname()
   const [isVisible, setIsVisible] = useState(false)
   const [showTooltip, setShowTooltip] = useState(false)
+
+  // Déterminer la section selon la page actuelle
+  const getSection = (): WhatsAppSection => {
+    if (pathname === '/') return 'hero'
+    if (pathname === '/contact') return 'contact'
+    if (pathname === '/a-propos') return 'about'
+    if (pathname === '/references') return 'references'
+    if (pathname?.includes('/services')) return 'services'
+    return 'default'
+  }
 
   useEffect(() => {
     // Show button after a delay
@@ -33,7 +47,8 @@ export default function WhatsAppButton() {
   }, [])
 
   const handleClick = () => {
-    window.open(whatsappLink, '_blank', 'noopener,noreferrer')
+    const section = getSection()
+    window.open(getWhatsAppLink(section, language), '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -61,8 +76,8 @@ export default function WhatsAppButton() {
           </button>
 
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
-              <MessageCircle className="w-5 h-5 text-accent" />
+            <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <MessageCircle className="w-5 h-5" style={{ color: '#25D366' }} />
             </div>
             <div>
               <p className="font-semibold text-gray-900 text-sm">
@@ -89,7 +104,7 @@ export default function WhatsAppButton() {
         <span className="absolute inset-0 rounded-full bg-accent animate-ping opacity-25" />
         
         {/* Icon */}
-        <MessageCircle className="w-7 h-7 text-white relative z-10" />
+        <MessageCircle className="w-7 h-7 relative z-10" style={{ color: '#25D366' }} />
 
         {/* Notification dot */}
         <span className="absolute top-0 right-0 w-4 h-4 bg-secondary rounded-full border-2 border-white flex items-center justify-center">

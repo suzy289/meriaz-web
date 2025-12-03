@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { Providers } from '@/components/Providers'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -70,6 +71,17 @@ export const metadata: Metadata = {
   verification: {
     google: 'your-google-verification-code',
   },
+  icons: {
+    icon: [
+      { url: '/1764774647277.png', type: 'image/png' },
+      { url: '/1764774647277.png', sizes: '32x32', type: 'image/png' },
+      { url: '/1764774647277.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/1764774647277.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/1764774647277.png',
+  },
 }
 
 export default function RootLayout({
@@ -80,7 +92,9 @@ export default function RootLayout({
   return (
     <html lang="fr" className={inter.variable}>
       <body className="font-sans">
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   )

@@ -75,8 +75,8 @@ export default function Contact() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 bg-white/10 hover:bg-white/20 rounded-xl p-4 transition-colors group"
                   >
-                    <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <MessageCircle className="w-6 h-6" />
+                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <MessageCircle className="w-6 h-6" style={{ color: '#25D366' }} />
                     </div>
                     <div>
                       <p className="font-semibold">{whatsappNumber}</p>

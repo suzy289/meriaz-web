@@ -1,12 +1,10 @@
 'use client'
 
-import { ExternalLink, Globe, Smartphone, Database } from 'lucide-react'
-import Card from '@/components/ui/Card'
-import Badge from '@/components/ui/Badge'
+import { ExternalLink, Globe, Smartphone, Database, Building2 } from 'lucide-react'
 import Button from '@/components/ui/Button'
-import SectionTitle from '@/components/ui/SectionTitle'
+import Link from 'next/link'
+import { useLanguage } from '@/contexts/LanguageContext'
 
-// Projets placeholder - à remplacer par les vrais projets
 const projects = [
   {
     id: '1',
@@ -18,7 +16,12 @@ const projects = [
     technologies: ['Laravel', 'PHP', 'MySQL', 'Tailwind CSS'],
     link: '#',
     icon: Database,
-    gradient: 'from-primary to-primary-light',
+    iconColor: 'bg-blue-500',
+    iconHover: 'bg-blue-600',
+    borderColor: 'border-blue-200',
+    borderHover: 'hover:border-blue-300',
+    headerBg: 'bg-blue-50',
+    accentColor: 'text-blue-600',
   },
   {
     id: '2',
@@ -30,7 +33,12 @@ const projects = [
     technologies: ['Next.js', 'TypeScript', 'PostgreSQL'],
     link: '#',
     icon: Globe,
-    gradient: 'from-secondary to-secondary-light',
+    iconColor: 'bg-emerald-500',
+    iconHover: 'bg-emerald-600',
+    borderColor: 'border-emerald-200',
+    borderHover: 'hover:border-emerald-300',
+    headerBg: 'bg-emerald-50',
+    accentColor: 'text-emerald-600',
   },
   {
     id: '3',
@@ -42,7 +50,12 @@ const projects = [
     technologies: ['Laravel', 'React', 'API REST'],
     link: '#',
     icon: Smartphone,
-    gradient: 'from-accent to-accent-light',
+    iconColor: 'bg-orange-500',
+    iconHover: 'bg-orange-600',
+    borderColor: 'border-orange-200',
+    borderHover: 'hover:border-orange-300',
+    headerBg: 'bg-orange-50',
+    accentColor: 'text-orange-600',
   },
   {
     id: '4',
@@ -53,116 +66,151 @@ const projects = [
       'Site web corporate présentant les activités et services du groupe avec design moderne et responsive.',
     technologies: ['Next.js', 'Tailwind CSS', 'Framer Motion'],
     link: '#',
-    icon: Globe,
-    gradient: 'from-purple-500 to-pink-500',
+    icon: Building2,
+    iconColor: 'bg-purple-500',
+    iconHover: 'bg-purple-600',
+    borderColor: 'border-purple-200',
+    borderHover: 'hover:border-purple-300',
+    headerBg: 'bg-purple-50',
+    accentColor: 'text-purple-600',
   },
 ]
 
+// Split projects into two groups
+const firstRow = [projects[0], projects[1]]
+const secondRow = [projects[2], projects[3]]
+
+// Duplicate projects for infinite scroll effect
+const firstRowDuplicated = [...firstRow, ...firstRow, ...firstRow]
+const secondRowDuplicated = [...secondRow, ...secondRow, ...secondRow]
+
 export default function Portfolio() {
-  return (
-    <section id="portfolio" className="section bg-gray-50">
-      <div className="container-custom">
-        <SectionTitle
-          title="Nos réalisations récentes"
-          subtitle="Découvrez quelques projets que nous avons réalisés pour nos clients. Chaque projet est unique et adapté aux besoins spécifiques de l'entreprise."
-        />
+  const { t } = useLanguage()
+  
+  const ProjectCard = ({ project, index }: { project: typeof projects[0], index: number }) => {
+    const Icon = project.icon
+    return (
+      <div
+        className={`group bg-white border-2 ${project.borderColor} rounded-xl overflow-hidden ${project.borderHover} hover:shadow-lg transition-all duration-300 flex-shrink-0 w-[450px] md:w-[500px]`}
+      >
+        {/* Project Header */}
+        <div className={`${project.headerBg} border-b ${project.borderColor} p-6`}>
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex items-center gap-4">
+              <div className={`w-12 h-12 ${project.iconColor} ${project.iconHover} rounded-lg flex items-center justify-center transition-colors shadow-md`}>
+                <Icon className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <span className={`text-xs font-semibold ${project.accentColor} uppercase tracking-wider`}>
+                  {project.type}
+                </span>
+                <h3 className="text-xl font-bold text-gray-900 mt-1 group-hover:text-gray-700 transition-colors">
+                  {project.name}
+                </h3>
+              </div>
+            </div>
+          </div>
+          <p className="text-sm text-gray-600 font-medium">{project.client}</p>
+        </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {projects.map((project, index) => {
-            const Icon = project.icon
-            return (
-              <Card
-                key={project.id}
-                variant="hover"
-                className="group overflow-hidden border border-gray-100"
-              >
-                {/* Project header with gradient */}
-                <div
-                  className={`h-48 bg-gradient-to-br ${project.gradient} rounded-xl mb-6 flex items-center justify-center relative overflow-hidden`}
+        {/* Project Content */}
+        <div className="p-6 space-y-6">
+          <p className="text-gray-700 leading-relaxed">
+            {project.description}
+          </p>
+
+          {/* Technologies */}
+          <div>
+            <p className={`text-xs font-semibold ${project.accentColor} uppercase tracking-wider mb-3`}>
+              {t.portfolio.technologies}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {project.technologies.map((tech, techIndex) => (
+                <span
+                  key={techIndex}
+                  className={`px-3 py-1.5 ${project.headerBg} ${project.accentColor} text-sm font-medium rounded border ${project.borderColor}`}
                 >
-                  {/* Background pattern */}
-                  <div className="absolute inset-0 opacity-20">
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                      }}
-                    />
-                  </div>
-                  
-                  {/* Icon */}
-                  <div className="w-20 h-20 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="w-10 h-10 text-white" />
-                  </div>
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
 
-                  {/* Project type badge */}
-                  <div className="absolute top-4 left-4">
-                    <Badge variant="primary" className="bg-white/90 text-gray-900 border-0">
-                      {project.type}
-                    </Badge>
-                  </div>
-                </div>
+          {/* CTA */}
+          <div className="pt-4 border-t border-gray-100">
+            {project.link !== '#' ? (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-flex items-center gap-2 ${project.accentColor} font-semibold hover:opacity-80 transition-colors group/link`}
+              >
+{t.portfolio.discover}
+                <ExternalLink className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+              </a>
+            ) : (
+              <span className="text-gray-400 font-medium text-sm">
+{t.portfolio.confidential}
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+    )
+  }
 
-                {/* Project info */}
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-sm text-gray-500 mb-1">{project.client}</p>
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">
-                      {project.name}
-                    </h3>
-                  </div>
+  return (
+    <section id="portfolio" className="section bg-white overflow-hidden">
+      <div className="container-custom">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-50 rounded-full mb-6 border border-orange-100">
+            <span className="text-orange-600 font-semibold text-sm">{t.portfolio.badge}</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            {t.portfolio.title}
+          </h2>
+          <p className="text-lg text-gray-600">
+            {t.portfolio.subtitle}
+          </p>
+        </div>
 
-                  <p className="text-gray-600">{project.description}</p>
+        {/* Scrolling Rows */}
+        <div className="space-y-8 mb-16">
+          {/* First Row - Scroll Left to Right */}
+          <div className="relative overflow-hidden">
+            <div className="flex gap-6 animate-scroll-left">
+              {firstRowDuplicated.map((project, index) => (
+                <ProjectCard key={`row1-${index}`} project={project} index={index} />
+              ))}
+            </div>
+          </div>
 
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-lg"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* CTA */}
-                  <Button
-                    variant="secondary"
-                    size="md"
-                    onClick={() =>
-                      project.link !== '#' &&
-                      window.open(project.link, '_blank', 'noopener,noreferrer')
-                    }
-                    disabled={project.link === '#'}
-                    className="w-full justify-center group/btn"
-                  >
-                    {project.link === '#' ? 'Projet confidentiel' : 'Découvrir le projet'}
-                    {project.link !== '#' && (
-                      <ExternalLink className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                    )}
-                  </Button>
-                </div>
-              </Card>
-            )
-          })}
+          {/* Second Row - Scroll Right to Left */}
+          <div className="relative overflow-hidden">
+            <div className="flex gap-6 animate-scroll-right">
+              {secondRowDuplicated.map((project, index) => (
+                <ProjectCard key={`row2-${index}`} project={project} index={index} />
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Call to action */}
-        <div className="mt-12 text-center">
-          <p className="text-gray-600 mb-4">
-            Vous souhaitez voir plus de réalisations ou discuter de votre projet ?
+        <div className="text-center pt-8 border-t border-gray-200">
+          <p className="text-gray-600 mb-6">
+            {t.portfolio.ctaSubtitle}
           </p>
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Discutons de votre projet
-          </Button>
+          <Link href="/contact">
+            <Button
+              variant="primary"
+              size="lg"
+            >
+              {t.portfolio.cta}
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
   )
 }
-
