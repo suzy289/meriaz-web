@@ -86,8 +86,11 @@ export default function Footer() {
               {t.footer.description}
             </p>
 
-            {/* Social links */}
-            <div className="flex gap-3">
+            {/* Contact and Social links */}
+            <div className="border-t border-white/10 pt-6 mb-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-8">
+                {/* Social links - Left */}
+                <div className="flex gap-3">
               {socialLinks.map((social, index) => {
                 const Icon = social.icon
                 return (
@@ -103,6 +106,52 @@ export default function Footer() {
                   </a>
                 )
               })}
+                </div>
+
+                {/* Contact Info - Right */}
+                <div className="flex flex-row items-center gap-4 sm:gap-6">
+                  {/* Email */}
+                  <a
+                    href="mailto:contact@meriaz.com"
+                    className="flex items-center gap-3 group"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 group-hover:border-primary/30 transition-colors duration-300">
+                      <Mail className="w-4 h-4 text-primary" />
+                    </div>
+                    <div>
+                      <span className="text-gray-400 group-hover:text-white transition-colors text-sm block">contact@meriaz.com</span>
+                      <span className="text-xs text-gray-600">Email</span>
+                    </div>
+                  </a>
+
+                  {/* Location */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-4 h-4 text-secondary" />
+                    </div>
+                    <div>
+                      <span className="text-gray-400 text-sm block">Yaoundé, Cameroun</span>
+                      <span className="text-xs text-gray-600">Localisation</span>
+                    </div>
+                  </div>
+
+                  {/* WhatsApp */}
+                  <a
+                    href={getWhatsAppLink('footer', language)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 group whitespace-nowrap"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-green-500/20 group-hover:border-green-500/30 transition-colors duration-300">
+                      <MessageCircle className="w-4 h-4" style={{ color: '#25D366' }} />
+                    </div>
+                    <div>
+                      <span className="text-gray-400 group-hover:text-white transition-colors text-sm block whitespace-nowrap">{whatsappNumber}</span>
+                      <span className="text-xs text-[#FF4500]">WhatsApp</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -151,14 +200,14 @@ export default function Footer() {
             </div>
 
             {/* Products */}
-            <div>
-              <h4 className="text-xs font-bold mb-4 text-white uppercase tracking-widest flex items-center gap-2">
+            <div className="text-center sm:text-left">
+              <h4 className="text-xs font-bold mb-4 text-white uppercase tracking-widest flex items-center justify-center sm:justify-start gap-2">
                 <span className="w-6 h-0.5 bg-gradient-to-r from-accent to-accent/50 rounded-full"></span>
 {t.footer.ourProducts}
               </h4>
               <ul className="space-y-2">
                 {products.map((product, index) => (
-                  <li key={index}>
+                  <li key={index} className="flex justify-center sm:justify-start">
                     {product.external ? (
                       <a
                         href={product.href}
@@ -185,70 +234,18 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Contact Row */}
-        <div className="border-t border-white/10 pt-8 mb-8">
-          <h4 className="text-xs font-bold mb-4 text-white uppercase tracking-widest flex items-center gap-2">
-            <span className="w-6 h-0.5 bg-gradient-to-r from-primary to-primary/50 rounded-full"></span>
-{t.footer.contact}
-          </h4>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {/* WhatsApp */}
-            <a
-              href={getWhatsAppLink('footer', language)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 group"
-            >
-              <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-green-500/20 group-hover:border-green-500/30 transition-colors duration-300">
-                <MessageCircle className="w-4 h-4" style={{ color: '#25D366' }} />
-              </div>
-              <div>
-                <span className="text-gray-400 group-hover:text-white transition-colors text-sm block">{whatsappNumber}</span>
-                <span className="text-xs text-[#FF4500]">WhatsApp</span>
-              </div>
-            </a>
-
-            {/* Email */}
-            <a
-              href="mailto:contact@meriaz.com"
-              className="flex items-center gap-3 group"
-            >
-              <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 group-hover:border-primary/30 transition-colors duration-300">
-                <Mail className="w-4 h-4 text-primary" />
-              </div>
-              <div>
-                <span className="text-gray-400 group-hover:text-white transition-colors text-sm block">contact@meriaz.com</span>
-                <span className="text-xs text-gray-600">Email</span>
-              </div>
-            </a>
-
-            {/* Location */}
+        {/* Bottom bar - Integrated */}
+        <div className="border-t border-white/10 pt-6 pb-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
-                <MapPin className="w-4 h-4 text-secondary" />
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center">
+                <Shield className="w-3.5 h-3.5 text-primary" />
               </div>
-              <div>
-                <span className="text-gray-400 text-sm block">Yaoundé, Cameroun</span>
-                <span className="text-xs text-gray-600">Localisation</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom bar */}
-      <div className="border-t border-white/10">
-        <div className="container-custom py-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center">
-                <Shield className="w-4 h-4 text-primary" />
-              </div>
-              <p className="text-gray-400 text-xs sm:text-sm">
+              <p className="text-gray-400 text-xs">
 {t.footer.copyright.replace('2024', currentYear.toString())}
               </p>
             </div>
-            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 text-xs">
               <button className="text-gray-500 hover:text-white transition-colors duration-300">
                 Mentions légales
               </button>
@@ -260,7 +257,7 @@ export default function Footer() {
               </button>
             </div>
           </div>
-          <p className="text-[#FF4500] text-[10px] sm:text-xs text-center mt-4 max-w-xl mx-auto">
+          <p className="text-[#FF4500] text-[10px] sm:text-xs text-center mt-3 max-w-xl mx-auto">
             Meriaz est votre partenaire technologique pour la transformation digitale des entrepreneurs africains.
           </p>
         </div>

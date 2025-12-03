@@ -65,7 +65,7 @@ export default function WhatsAppButton() {
           showTooltip ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'
         )}
       >
-        <div className="bg-white rounded-2xl shadow-xl p-4 max-w-[280px] relative">
+        <div className="bg-white rounded-xl shadow-xl p-3 max-w-[180px] relative">
           {/* Close button */}
           <button
             onClick={() => setShowTooltip(false)}
@@ -75,18 +75,13 @@ export default function WhatsAppButton() {
             <X className="w-4 h-4 text-gray-500" />
           </button>
 
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-              <MessageCircle className="w-5 h-5" style={{ color: '#25D366' }} />
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <MessageCircle className="w-4 h-4" style={{ color: '#25D366' }} />
             </div>
-            <div>
-              <p className="font-semibold text-gray-900 text-sm">
-                Besoin d&apos;aide ?
-              </p>
-              <p className="text-gray-600 text-xs mt-1">
-                Discutons de votre projet sur WhatsApp. Réponse rapide garantie !
-              </p>
-            </div>
+            <p className="font-semibold text-gray-900 text-sm">
+              Besoin d&apos;aide ?
+            </p>
           </div>
 
           {/* Arrow */}
@@ -104,7 +99,7 @@ export default function WhatsAppButton() {
         <span className="absolute inset-0 rounded-full bg-accent animate-ping opacity-25" />
         
         {/* Icon */}
-        <MessageCircle className="w-7 h-7 relative z-10" style={{ color: '#25D366' }} />
+        <MessageCircle className="w-7 h-7 relative z-10 text-white" />
 
         {/* Notification dot */}
         <span className="absolute top-0 right-0 w-4 h-4 bg-secondary rounded-full border-2 border-white flex items-center justify-center">

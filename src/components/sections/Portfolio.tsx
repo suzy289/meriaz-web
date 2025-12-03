@@ -1,9 +1,10 @@
 'use client'
 
-import { ExternalLink, Globe, Smartphone, Database, Building2 } from 'lucide-react'
+import { ExternalLink, Globe, Smartphone, Database, Building2, ChevronLeft, ChevronRight } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import Link from 'next/link'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { useState } from 'react'
 
 const projects = [
   {
@@ -86,12 +87,21 @@ const secondRowDuplicated = [...secondRow, ...secondRow, ...secondRow]
 
 export default function Portfolio() {
   const { t } = useLanguage()
+  const [currentIndex, setCurrentIndex] = useState(0)
+  
+  const nextProject = () => {
+    setCurrentIndex((prev) => (prev + 1) % projects.length)
+  }
+  
+  const prevProject = () => {
+    setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length)
+  }
   
   const ProjectCard = ({ project, index }: { project: typeof projects[0], index: number }) => {
     const Icon = project.icon
     return (
       <div
-        className={`group bg-white border-2 ${project.borderColor} rounded-xl overflow-hidden ${project.borderHover} hover:shadow-lg transition-all duration-300 flex-shrink-0 w-[450px] md:w-[500px]`}
+        className={`group bg-white border-2 ${project.borderColor} rounded-xl overflow-hidden ${project.borderHover} hover:shadow-lg transition-all duration-300 flex-shrink-0 w-full md:w-[450px] lg:w-[500px]`}
       >
         {/* Project Header */}
         <div className={`${project.headerBg} border-b ${project.borderColor} p-6`}>
@@ -175,8 +185,57 @@ export default function Portfolio() {
           </p>
         </div>
 
-        {/* Scrolling Rows */}
-        <div className="space-y-8 mb-16">
+        {/* Mobile: Carousel with arrows */}
+        <div className="md:hidden mb-16">
+          <div className="relative">
+            {/* Project Card */}
+            <div className="overflow-hidden">
+              <div 
+                className="flex transition-transform duration-300 ease-in-out"
+                style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+              >
+                {projects.map((project, index) => (
+                  <div key={project.id} className="w-full flex-shrink-0 px-2">
+                    <ProjectCard project={project} index={index} />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Navigation Arrows */}
+            <button
+              onClick={prevProject}
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white border border-gray-200 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 z-10 hover:scale-110"
+              aria-label="Projet précédent"
+            >
+              <ChevronLeft className="w-6 h-6 text-gray-700" />
+            </button>
+            <button
+              onClick={nextProject}
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white border border-gray-200 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 z-10 hover:scale-110"
+              aria-label="Projet suivant"
+            >
+              <ChevronRight className="w-6 h-6 text-gray-700" />
+            </button>
+
+            {/* Indicators */}
+            <div className="flex justify-center gap-2 mt-6">
+              {projects.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`h-2 rounded-full transition-all duration-200 ${
+                    currentIndex === index ? 'w-8 bg-primary' : 'w-2 bg-gray-300'
+                  }`}
+                  aria-label={`Aller au projet ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop: Scrolling Rows */}
+        <div className="hidden md:block space-y-8 mb-16">
           {/* First Row - Scroll Left to Right */}
           <div className="relative overflow-hidden">
             <div className="flex gap-6 animate-scroll-left">
