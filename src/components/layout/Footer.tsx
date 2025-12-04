@@ -64,12 +64,12 @@ export default function Footer() {
       </div>
 
       {/* Main footer */}
-      <div className="container-custom pt-12 sm:pt-16 pb-6 sm:pb-8 relative z-10 px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-12 mb-8 sm:mb-10">
+      <div className="container-custom pt-6 sm:pt-16 pb-4 sm:pb-8 relative z-10 px-4 sm:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-10 lg:gap-12 mb-4 sm:mb-10">
           {/* Brand column */}
           <div className="lg:col-span-2">
             {/* Logo */}
-            <div className="mb-3 sm:mb-4">
+            <div className="mb-2 sm:mb-4">
               <Image
                 src="/Copie de Fichier 6 (1).png"
                 alt="Meriaz"
@@ -79,18 +79,18 @@ export default function Footer() {
               />
             </div>
             
-            <p className="text-base sm:text-lg font-medium text-white mb-2">
+            <p className="text-base sm:text-lg font-medium text-white mb-1 sm:mb-2">
               {t.footer.tagline}
             </p>
-            <p className="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6 max-w-sm leading-relaxed">
+            <p className="text-sm sm:text-base text-gray-400 mb-3 sm:mb-6 max-w-sm leading-relaxed">
               {t.footer.description}
             </p>
 
             {/* Contact and Social links */}
-            <div className="border-t border-white/10 pt-6 mb-6">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-8">
+            <div className="border-t border-white/10 pt-3 sm:pt-6 mb-3 sm:mb-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-8">
                 {/* Social links - Left */}
-                <div className="flex gap-3">
+                <div className="hidden sm:flex gap-3">
               {socialLinks.map((social, index) => {
                 const Icon = social.icon
                 return (
@@ -102,14 +102,14 @@ export default function Footer() {
                     aria-label={social.label}
                     className="w-10 h-10 bg-white/5 border border-white/10 hover:bg-[#FF4500]/20 hover:border-[#FF4500]/30 rounded-lg flex items-center justify-center transition-all duration-300"
                   >
-                    <Icon className="w-5 h-5 text-[#FF4500]" />
+                    <Icon className="w-5 h-5 text-white" />
                   </a>
                 )
               })}
                 </div>
 
                 {/* Contact Info - Right */}
-                <div className="flex flex-row items-center gap-4 sm:gap-6">
+                <div className="hidden sm:flex flex-row items-center gap-4 sm:gap-6">
                   {/* Email */}
                   <a
                     href="mailto:contact@meriaz.com"
@@ -140,7 +140,7 @@ export default function Footer() {
                     href={getWhatsAppLink('footer', language)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 group whitespace-nowrap"
+                    className="hidden sm:flex items-center gap-3 group whitespace-nowrap"
                   >
                     <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-green-500/20 group-hover:border-green-500/30 transition-colors duration-300">
                       <MessageCircle className="w-4 h-4" style={{ color: '#25D366' }} />
@@ -156,14 +156,14 @@ export default function Footer() {
           </div>
 
           {/* Links Grid */}
-          <div className="lg:col-span-3 grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8">
+          <div className="lg:col-span-3 grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-8">
             {/* Information */}
             <div>
-              <h4 className="text-xs font-bold mb-4 text-white uppercase tracking-widest flex items-center gap-2">
+              <h4 className="text-xs font-bold mb-2 sm:mb-4 text-white uppercase tracking-widest flex items-center gap-2">
                 <span className="w-6 h-0.5 bg-gradient-to-r from-primary to-primary/50 rounded-full"></span>
 {t.footer.information}
               </h4>
-              <ul className="space-y-2">
+              <ul className="space-y-1.5 sm:space-y-2">
                 {information.map((link, index) => (
                   <li key={index}>
                     <Link
@@ -180,11 +180,11 @@ export default function Footer() {
 
             {/* Services */}
             <div>
-              <h4 className="text-xs font-bold mb-4 text-white uppercase tracking-widest flex items-center gap-2">
+              <h4 className="text-xs font-bold mb-2 sm:mb-4 text-white uppercase tracking-widest flex items-center gap-2">
                 <span className="w-6 h-0.5 bg-gradient-to-r from-secondary to-secondary/50 rounded-full"></span>
 {t.footer.ourServices}
               </h4>
-              <ul className="space-y-2">
+              <ul className="space-y-1.5 sm:space-y-2">
                 {services.map((service, index) => (
                   <li key={index}>
                     <Link
@@ -199,13 +199,13 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Products */}
-            <div className="text-center sm:text-left">
+            {/* Products - Centered on mobile, left-aligned on desktop */}
+            <div className="hidden sm:block col-span-2 sm:col-span-1 text-center sm:text-left">
               <h4 className="text-xs font-bold mb-4 text-white uppercase tracking-widest flex items-center justify-center sm:justify-start gap-2">
                 <span className="w-6 h-0.5 bg-gradient-to-r from-accent to-accent/50 rounded-full"></span>
 {t.footer.ourProducts}
               </h4>
-              <ul className="space-y-2">
+              <ul className="grid grid-cols-2 sm:flex sm:flex-col gap-2 sm:gap-0 sm:space-y-2">
                 {products.map((product, index) => (
                   <li key={index} className="flex justify-center sm:justify-start">
                     {product.external ? (
@@ -235,8 +235,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar - Integrated */}
-        <div className="border-t border-white/10 pt-6 pb-4">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
+        <div className="border-t border-white/10 pt-4 sm:pt-6 pb-3 sm:pb-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-3">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center">
                 <Shield className="w-3.5 h-3.5 text-primary" />
@@ -257,7 +257,7 @@ export default function Footer() {
               </button>
             </div>
           </div>
-          <p className="text-[#FF4500] text-[10px] sm:text-xs text-center mt-3 max-w-xl mx-auto">
+          <p className="text-[#FF4500] text-[10px] sm:text-xs text-center mt-2 sm:mt-3 max-w-xl mx-auto">
             Meriaz est votre partenaire technologique pour la transformation digitale des entrepreneurs africains.
           </p>
         </div>

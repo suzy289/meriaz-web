@@ -65,7 +65,7 @@ export default function WhatsAppButton() {
           showTooltip ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'
         )}
       >
-        <div className="bg-white rounded-xl shadow-xl p-3 max-w-[180px] relative">
+        <div className="bg-white rounded-xl shadow-xl p-3 relative whitespace-nowrap">
           {/* Close button */}
           <button
             onClick={() => setShowTooltip(false)}
@@ -79,7 +79,7 @@ export default function WhatsAppButton() {
             <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
               <MessageCircle className="w-4 h-4" style={{ color: '#25D366' }} />
             </div>
-            <p className="font-semibold text-gray-900 text-sm">
+            <p className="font-semibold text-gray-900 text-sm whitespace-nowrap">
               Besoin d&apos;aide ?
             </p>
           </div>
