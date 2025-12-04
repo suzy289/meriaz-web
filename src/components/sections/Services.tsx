@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
   Globe,
   Check,
@@ -37,13 +37,13 @@ export default function Services() {
     { text: t.services.popular.feature6, icon: Rocket, color: '#FF4500', bgColor: 'rgba(255, 69, 0, 0.3)' }, // Orange
   ]
 
-  const erpFeatures = [
+  const erpFeatures = useMemo(() => [
     { icon: Cog, text: t.services.erp.feature1 },
     { icon: Building2, text: t.services.erp.feature2 },
     { icon: Rocket, text: t.services.erp.feature3 },
     { icon: Users, text: t.services.erp.feature4 },
     { icon: HeadphonesIcon, text: t.services.erp.feature5 },
-  ]
+  ], [t])
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [visibleFeatures, setVisibleFeatures] = useState<number[]>([])
 
@@ -84,7 +84,7 @@ export default function Services() {
     }
 
     return () => observer.disconnect()
-  }, [])
+  }, [erpFeatures])
 
   return (
     <section id="services" className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">

@@ -39,7 +39,7 @@ export default function AProposPage() {
     }, 5000) // Change image every 5 seconds
 
     return () => clearInterval(interval)
-  }, [])
+  }, [backgroundImages.length])
   
   const values = [
     {
