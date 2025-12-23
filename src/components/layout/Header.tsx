@@ -11,11 +11,14 @@ import {
   Package, 
   FolderOpen, 
   ChevronDown,
-  Home
+  Home,
+  Sun,
+  Moon
 } from 'lucide-react'
 import { cn, scrollToSection } from '@/lib/utils'
 import Button from '@/components/ui/Button'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { useTheme } from '@/contexts/ThemeContext'
 
 const navItems = [
   { label: 'Accueil', labelEn: 'Home', href: '/', isPage: true, icon: Home },
@@ -53,6 +56,7 @@ const languages = [
 
 export default function Header() {
   const { language: currentLang, setLanguage: setCurrentLang, t } = useLanguage()
+  const { theme, toggleTheme } = useTheme()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false)
@@ -129,7 +133,7 @@ export default function Header() {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
         showWhiteBg
-          ? 'bg-white/95 backdrop-blur-md shadow-lg'
+          ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg dark:shadow-gray-900/50'
           : 'bg-transparent'
       )}
     >
@@ -165,7 +169,7 @@ export default function Header() {
                     className={cn(
                       'px-4 py-2 rounded-lg font-medium transition-all duration-300 relative flex items-center gap-2',
                       showWhiteBg
-                        ? 'text-gray-700 hover:text-primary hover:bg-gray-100'
+                        ? 'text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light hover:bg-gray-100 dark:hover:bg-gray-800'
                         : 'text-white/90 hover:text-white hover:bg-white/10'
                     )}
                   >
@@ -244,14 +248,32 @@ export default function Header() {
               </div>
             </div>
 
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              className={cn(
+                'flex items-center justify-center w-10 h-10 rounded-lg font-medium transition-all duration-300',
+                showWhiteBg
+                  ? 'text-gray-700 hover:text-primary hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
+                  : 'text-white/90 hover:text-white hover:bg-white/10'
+              )}
+              aria-label={theme === 'light' ? 'Activer le mode sombre' : 'Activer le mode clair'}
+            >
+              {theme === 'light' ? (
+                <Moon className="w-5 h-5" />
+              ) : (
+                <Sun className="w-5 h-5" />
+              )}
+            </button>
+
             {/* CTA Button */}
-            <Link href="/contact">
+            <Link href="/devis">
               <Button
                 variant={showWhiteBg ? "secondary" : "primary"}
                 size="md"
                 className={showWhiteBg ? "bg-gray-900 text-white hover:bg-gray-800 border-gray-900" : ""}
               >
-{t.header.contactUs}
+                {t.header.contactUs}
               </Button>
             </Link>
           </div>
@@ -320,6 +342,24 @@ export default function Header() {
               </div>
             </div>
 
+            {/* Mobile Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className={cn(
+                'p-2 rounded-lg transition-colors',
+                showWhiteBg
+                  ? 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
+                  : 'text-white hover:bg-white/10'
+              )}
+              aria-label={theme === 'light' ? 'Activer le mode sombre' : 'Activer le mode clair'}
+            >
+              {theme === 'light' ? (
+                <Moon className="w-5 h-5" />
+              ) : (
+                <Sun className="w-5 h-5" />
+              )}
+            </button>
+
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -344,7 +384,7 @@ export default function Header() {
       {/* Mobile Menu */}
       <div
         className={cn(
-          'lg:hidden fixed inset-x-0 top-20 bg-white shadow-xl transition-all duration-300 transform',
+          'lg:hidden fixed inset-x-0 top-20 bg-white dark:bg-gray-900 shadow-xl transition-all duration-300 transform',
           isMobileMenuOpen
             ? 'opacity-100 translate-y-0'
             : 'opacity-0 -translate-y-4 pointer-events-none'
@@ -358,7 +398,7 @@ export default function Header() {
                 <button
                   key={item.href}
                   onClick={() => handleNavClick(item)}
-                  className="px-4 py-3 rounded-xl font-medium text-left transition-all duration-200 text-gray-700 hover:text-primary hover:bg-gray-50 flex items-center gap-3"
+                  className="px-4 py-3 rounded-xl font-medium text-left transition-all duration-200 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-3"
                 >
                   <Icon className="w-5 h-5" />
                   {getLabel(item)}
@@ -366,7 +406,7 @@ export default function Header() {
               )
             })}
 
-            <div className="pt-4 border-t border-gray-200 mt-2">
+            <div className="pt-4 border-t border-gray-200 dark:border-gray-700 mt-2">
               <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button
                   variant={showWhiteBg ? "secondary" : "primary"}

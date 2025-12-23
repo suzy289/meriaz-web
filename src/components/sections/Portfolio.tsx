@@ -260,7 +260,7 @@ export default function Portfolio() {
           <p className="text-gray-600 mb-6">
             {t.portfolio.ctaSubtitle}
           </p>
-          <Link href="/contact">
+          <Link href="/devis">
             <Button
               variant="primary"
               size="lg"

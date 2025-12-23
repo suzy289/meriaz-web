@@ -48,7 +48,7 @@ export default function Hero() {
                 <span className="text-white/90 text-xs sm:text-sm font-medium">{t.hero.badge}</span>
               </div>
               <div className="px-3 sm:px-4 py-1.5 sm:py-2 bg-secondary rounded-full">
-                <span className="text-gray-900 text-xs sm:text-sm font-bold">À partir de 30 000 XAF</span>
+                <span className="text-gray-900 dark:text-white text-xs sm:text-sm font-bold">À partir de 30 000 XAF</span>
               </div>
             </div>
 
@@ -82,7 +82,7 @@ export default function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-8 sm:mb-10 animate-fade-in-up animation-delay-400">
-              <Link href="/contact">
+              <Link href="/devis">
                 <Button
                   variant="primary"
                   size="lg"
@@ -132,9 +132,9 @@ export default function Hero() {
           <div className="hidden lg:block relative">
             <div className="relative animate-fade-in animation-delay-300">
               {/* Main visual card */}
-              <div className="relative bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
+              <div className="relative bg-white/10 dark:bg-gray-800/30 backdrop-blur-lg rounded-3xl p-8 border border-white/20 dark:border-gray-700/50 shadow-2xl">
                 {/* Browser mockup */}
-                <div className="bg-gray-900 rounded-xl overflow-hidden shadow-inner">
+                <div className="bg-gray-900 dark:bg-gray-950 rounded-xl overflow-hidden shadow-inner">
                   {/* Browser header */}
                   <div className="bg-gray-800 px-4 py-3 flex items-center gap-2">
                     <div className="flex gap-2">
@@ -169,26 +169,26 @@ export default function Hero() {
               </div>
 
               {/* Floating elements */}
-              <div className="absolute -left-8 top-1/4 bg-white rounded-2xl p-4 shadow-xl animate-float">
+              <div className="absolute -left-8 top-1/4 bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-xl dark:shadow-gray-900/50 animate-float">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center">
                     <Check className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <div className="font-semibold text-gray-900 text-sm">Site livré</div>
-                    <div className="text-gray-500 text-xs">En 5 jours</div>
+                    <div className="font-semibold text-gray-900 dark:text-white text-sm">Site livré</div>
+                    <div className="text-gray-500 dark:text-gray-400 text-xs">En 5 jours</div>
                   </div>
                 </div>
               </div>
 
-              <div className="absolute -right-8 bottom-1/4 bg-white rounded-2xl p-4 shadow-xl animate-float animation-delay-300">
+              <div className="absolute -right-8 bottom-1/4 bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-xl dark:shadow-gray-900/50 animate-float animation-delay-300">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
-                    <span className="text-primary font-bold">IA</span>
+                    <span className="text-primary dark:text-primary-light font-bold">IA</span>
                   </div>
                   <div>
-                    <div className="font-semibold text-gray-900 text-sm">Automatisation</div>
-                    <div className="text-gray-500 text-xs">24h/24</div>
+                    <div className="font-semibold text-gray-900 dark:text-white text-sm">Automatisation</div>
+                    <div className="text-gray-500 dark:text-gray-400 text-xs">24h/24</div>
                   </div>
                 </div>
               </div>

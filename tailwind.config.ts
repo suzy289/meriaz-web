@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -68,8 +69,18 @@ const config: Config = {
         'bounce-subtle': 'bounceSubtle 2s infinite',
         'pulse-glow': 'pulseGlow 2s infinite',
         'float': 'float 6s ease-in-out infinite',
+        scroll: 'scroll 40s linear infinite',
+        'scroll-reverse': 'scroll-reverse 40s linear infinite',
       },
       keyframes: {
+        scroll: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        'scroll-reverse': {
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },

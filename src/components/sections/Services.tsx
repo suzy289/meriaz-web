@@ -245,7 +245,7 @@ export default function Services() {
 
                 {/* Button at bottom, centered */}
                 <div className="mt-auto pt-4 flex justify-center">
-                  <Link href="/contact">
+                  <Link href="/devis">
                     <Button
                       variant="primary"
                       size="lg"

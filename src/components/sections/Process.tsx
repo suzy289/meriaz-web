@@ -4,6 +4,7 @@ import { MessageCircle, FileText, Code, Rocket, ArrowRight } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import SectionTitle from '@/components/ui/SectionTitle'
 import { scrollToSection } from '@/lib/utils'
+import Link from 'next/link'
 
 const steps = [
   {
@@ -156,15 +157,16 @@ export default function Process() {
 
         {/* CTA */}
         <div className="mt-12 text-center">
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => scrollToSection('contact')}
-            className="group"
-          >
-            Lancer mon projet avec Meriaz
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <Link href="/devis">
+            <Button
+              variant="primary"
+              size="lg"
+              className="group"
+            >
+              Lancer mon projet avec Meriaz
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

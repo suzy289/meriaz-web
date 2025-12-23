@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #4F46E5;
+  --primary-alt: #7C3AED;
+  --secondary: #FF4500;
+  --secondary-dark: #D94600;
+  --success: #10B981;
+  --background: #FFFFFF;
+  --surface: #F8FAFC;
+  --text-primary: #0F172A;
+  --text-secondary: #64748B;
+}
+
+html, body {
+  height: 100%;
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-xl text-white font-semibold transition-transform duration-200;
+  background-image: linear-gradient(to right, var(--secondary), var(--secondary-dark));
+}
+.btn-primary:hover {
+  transform: scale(1.05);
+}
+.btn-secondary {
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-xl border-2 text-primary border-primary transition-colors duration-200;
+}
+.btn-secondary:hover {
+  @apply bg-indigo-50;
+}
+
+.card {
+  @apply bg-white rounded-2xl shadow-xl p-8 border-2 border-transparent transition-all duration-300 ease-out;
+}
+.card:hover {
+  @apply shadow-2xl -translate-y-2 scale-[1.02] border-indigo-500;
+}
+
+.card-star {
+  @apply card border-orange-300;
+  background-image: linear-gradient(to bottom right, #FFECE3, #FFE5E5);
+}
